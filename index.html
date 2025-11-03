@@ -11,37 +11,36 @@
   <style>
 /* ---------------- Variables & Themes ---------------- */
 :root {
-  /* -- الثوابت العامة -- */
+
   --radius: 14px;
   --ease: cubic-bezier(.2, .9, .3, 1);
   --trans: 360ms var(--ease);
 
-  /* -- ألوان الثيم الفاتح -- */
   --light-bg: #f6f8fb;
   --light-surface: #ffffff;
   --light-surface-rgb: 255, 255, 255; 
   --light-text: #071026;
   --light-muted: #475569;
   --light-accent-a: #0b84ff;
-  --light-accent-a-rgb: 11, 132, 255; /* <<<--- تمت إضافة نسخة RGB */
+  --light-accent-a-rgb: 11, 132, 255; 
   --light-accent-b: #0b3b66;
-  --light-accent-b-rgb: 11, 59, 102;  /* <<<--- تمت إضافة نسخة RGB */
+  --light-accent-b-rgb: 11, 59, 102; 
 
-  /* -- ألوان الثيم الداكن -- */
+
   --dark-bg: #1A1A1A;
   --dark-surface: #292929;
-  --dark-surface-rgb: 41, 41, 41; /* <<<--- أضف هذا السطر */
+  --dark-surface-rgb: 41, 41, 41; 
   --dark-text: #F0F0F0;
   --dark-muted: #999999;
   --dark-accent-a: #004D61;
-  --dark-accent-a-rgb: 0, 77, 97;     /* <<<--- تمت إضافة نسخة RGB */
+  --dark-accent-a-rgb: 0, 77, 97;    
   --dark-accent-b: #822659;
-  --dark-accent-b-rgb: 130, 38, 89;  /* <<<--- تمت إضافة نسخة RGB */
+  --dark-accent-b-rgb: 130, 38, 89;  
   
-  /* -- المتغيرات التشغيلية (الافتراضي هو الداكن) -- */
+  
   --bg: var(--dark-bg);
   --surface: var(--dark-surface);
-  --surface-rgb: var(--dark-surface-rgb); /* <<<--- أضف هذا السطر */
+  --surface-rgb: var(--dark-surface-rgb); 
   --text: var(--dark-text);
   --muted: var(--dark-muted);
   --accent-a: var(--dark-accent-a);
@@ -68,10 +67,9 @@ body.light {
     a{text-decoration:none;color:inherit}
     img{max-width:100%;display:block}
     button{font-family:inherit;cursor:pointer;border:0;background:none}
-    /* smooth scroll-snap for full sections */
     main{height:100vh;overflow-y:auto; scroll-behavior:smooth; scroll-snap-type: y proximity;}
    section {min-height:100vh;padding:80px 40px; position:relative; scroll-snap-align: start;}
-    .container {width: 100%;max-width: 1500px; /* <<<--- ده العرض الأقصى للمحتوى اللي في النص */margin: 0 auto; /* عشان يتوسط */}
+    .container {width: 100%;max-width: 1500px; margin: 0 auto; }
 
     /* ---------------- Top controls ---------------- */
     .top-left, .top-right {position:fixed;z-index:200;display:flex;gap:10px;align-items:center}
@@ -85,24 +83,22 @@ body.light {
     /* ---------------- Drawer (left) ---------------- */
    .drawer {
   position:fixed;left:12px;top:12px;height:calc(100vh - 24px);width:72px;border-radius:16px;
-  /* الخلفية هتكون شفافة وهي مقفولة عشان الـ transform */
   background: transparent;
-  /* الظل ده عشان يبان إن فيه حاجة موجودة بره الشاشة لما نفتح */
   box-shadow:0 30px 80px rgba(2,6,23,0.6);
   overflow:hidden;z-index:190;
   display:flex;flex-direction:column;align-items:center;padding:12px;backdrop-filter: blur(6px);
-  transform: translateX(-120%); /* زي ما اتفقنا عشان تكون مخفية */
+  transform: translateX(-120%); 
   transition: transform .38s var(--ease), background .38s var(--ease), box-shadow .38s var(--ease); /* زودنا الوقت عشان يكون أنعم */
 }
      .drawer.expanded {
   width: 300px;
   transform: translateX(0);
   
-  /* -- التعديلات الجديدة هنا -- */
-  background: rgba(30, 41, 59, 0.3); /* خلفية زجاجية أغمق وأشيك */
-  backdrop-filter: blur(16px); /* زيادة قوة التأثير الزجاجي */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* إطار خفيف للتحديد */
-  border-radius: 24px; /* <-- حواف أنعم للقائمة نفسها */
+
+  background: rgba(30, 41, 59, 0.3); 
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  border-radius: 24px; 
   box-shadow: 0 40px 100px rgba(2,6,23,0.7);
 }
     .mini-dot{
@@ -114,17 +110,17 @@ body.light {
   gap:12px;
   align-items:center;
   padding:12px 16px;
-  border-radius: 16px; /* <-- حواف أنعم للعناصر */
+  border-radius: 16px; 
   cursor:pointer;
   transition: background .22s ease-out, transform .18s ease-out, box-shadow .22s ease-out;
   border: 1px solid rgba(255,255,255,0.1);
   margin-bottom: 8px;
 }
 .menu-item:hover{
-  background: rgba(255,255,255,0.15); /* خلفية فاتحة عند التحويم */
-  transform: translateY(-2px); /* حركة خفيفة لأعلى */
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* ظل خفيف */
-  border-color: rgba(255,255,255,0.3); /* إطار أوضح */
+  background: rgba(255,255,255,0.15); 
+  transform: translateY(-2px); 
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2); 
+  border-color: rgba(255,255,255,0.3); 
 }
    .menu-item .icon-box {
   width:44px;
@@ -136,17 +132,17 @@ body.light {
   color:white;
   background: rgba(0,0,0,0.1);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
-  font-size: 22px; /* <-- أرجع السطر ده */
+  font-size: 22px; 
 }
     .menu-item .label{
-  font-weight:600; /* أتقل شوية */
+  font-weight:600; 
   font-size:16px;
-  color:white; /* لون أبيض واضح */
+  color:white;
   opacity:0;transition:opacity .22s;
-  flex-grow: 1; /* عشان ياخد المساحة المتبقية */
-  white-space: nowrap; /* عشان النص ميكسرش سطر */
+  flex-grow: 1; 
+  white-space: nowrap; 
 }
-.drawer.expanded .label{ opacity:1; animation: fadeInRight .3s forwards; } /* زودنا أنيميشن بسيط */
+.drawer.expanded .label{ opacity:1; animation: fadeInRight .3s forwards; }
 
 @keyframes fadeInRight {
   from { opacity: 0; transform: translateX(-10px); }
@@ -154,7 +150,6 @@ body.light {
 }
    
 
-    /* center menu items vertically */
     .menu-centered{display:flex;flex-direction:column;justify-content:center;height:100%;gap:14px;padding:12px}
 
     /* ---------------- Blobs / Wave decoration ---------------- */
@@ -172,7 +167,6 @@ body.light {
     .hero-sub{margin-top:8px;font-size:18px;color:var(--text);font-weight:400}
     .cta{display:flex;gap:12px;margin-top:16px}
   .btn-primary {
-  /* <<<--- هنا التعديل الأساسي ---<<< */
   background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
   
   color: white;
@@ -182,23 +176,21 @@ body.light {
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   font-weight: 700;
   transition: all .3s ease;
-  background-size: 200% 100%; /* عشان تأثير التحويم يشتغل صح */
+  background-size: 200% 100%; 
 }
 
-/* تأثير تحويم أنيق (اختياري لكنه بيضيف لمسة احترافية) */
 .btn-primary:hover {
-  background-position: right center; /* بيحرك التدرج اللوني */
+  background-position: right center;
   transform: scale(1.03);
 }
 
-/* هنرجع لونه الأصلي في الثيم الفاتح */
 body.light .btn-primary {
   background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
   background-position: left center;
 }
  .btn-ghost {
   background: transparent;
-  border: 2px solid var(--surface); /* هنخلي الإطار أسمك شوية عشان يبان */
+  border: 2px solid var(--surface); 
   color: var(--text);
   padding: 10px 16px;
   border-radius: 999px;
@@ -206,12 +198,12 @@ body.light .btn-primary {
 }
 
 .btn-ghost:hover {
-  background: var(--accent-a); /* <<<--- لما الماوس يجي عليه، خلفيته هتبقى باللون الأول */
-  border-color: var(--accent-a); /* ولون الإطار كمان */
-  color: white; /* والنص يبقى أبيض عشان يظهر */
+  background: var(--accent-a); 
+  border-color: var(--accent-a); 
+  color: white; 
 }
 
-/* هنرجع لونه الأصلي في الثيم الفاتح */
+
 body.light .btn-ghost:hover {
   background: var(--surface);
   color: var(--accent-a);
@@ -219,11 +211,6 @@ body.light .btn-ghost:hover {
 }
 
    /* --- Who section (New Layout & Styling) --- */
-/* ============================================== */
-/* === تصميم Who am I (النسخة النهائية الصحيحة) === */
-/* ============================================== */
-
-/* القاعدة العامة للسكشن رجعت طبيعية عشان توسط كل حاجة */
 section#who {
   display: flex !important;
   align-items: center;
@@ -231,23 +218,22 @@ section#who {
   padding: 80px 40px !important;
 }
 
-/* الصندوق الرئيسي اللي جواه كل حاجة */
+
 .who-container {
   display: flex;
-  flex-direction: column; /* بنرص اللي جواه (السيباراتور والمحتوى) فوق بعض */
-  align-items: center; /* بنوسطهم أفقيًا */
+  flex-direction: column; 
+  align-items: center; 
   width: 100%;
-  max-width: 1500px; /* بنحدد عرض أقصى عشان التصميم يفرد */
+  max-width: 1500px; 
 }
 
-/* الشريط الزخرفي (فوق خالص) */
+
 .who-separator-svg {
-  width: 100%; /* بياخد عرض الصندوق الرئيسي */
+  width: 100%; 
   height: 12px;
-  margin-bottom: 80px; /* مسافة بينه وبين المحتوى */
+  margin-bottom: 80px;
 }
 
-/* حاوية المحتوى (الكلام والرسمة) */
 .who-grid {
   display: flex;
   justify-content: space-between;
@@ -256,7 +242,6 @@ section#who {
   gap: 100px;
 }
 
-/* الجزء الشمال (الكلام) */
 .who-content {
   flex-basis: 50%;
   max-width: 800px;
@@ -273,7 +258,6 @@ section#who {
   color: var(--muted);
 }
 
-/* الجزء اليمين (الرسمة) */
 .who-illustration {
   flex-shrink: 0;
 }
@@ -284,30 +268,21 @@ section#who {
 
 
   
-  /* small entrance animation */
- {
-  /* نتركها فارغة عمدًا */
-}
 
-/* 2. أي عنصر داخل الحاوية يحمل كلاس .anim-child سيكون مخفيًا في البداية */
+
 .anim-child {
       opacity: 0;
       transform: translateY(25px);
       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     }
 
-/* 3. عندما يضيف الجافاسكربت كلاس .fade-up للحاوية، تظهر العناصر الداخلية */
 .anim-child.fade-up {
       opacity: 1;
       transform: translateY(0);
     }
 
 
-/* ============================================== */
-/* === سكشن التعليم (Education) - نسخة معزولة ومُعززة الأولوية === */
-/* ============================================== */
-
-/* عنوان القسم */
+/* === سكشن التعليم (Education) === */
 #education .section-title.left-aligned {
   text-align: left;
   font-size: 56px;
@@ -315,7 +290,6 @@ section#who {
   color: var(--accent-a);
 }
 
-/* الشبكة العامة */
 #education .education-grid {
   display: grid;
   grid-template-columns: 1.8fr 1.2fr;  
@@ -327,13 +301,11 @@ section#who {
   margin-top: 55px;
 }
 
-/* المحتوى (الكروت) */
 #education .education-content {
   display: flex;
   flex-direction: column;
 }
 
-/* --- تصميم كروت التعليم --- */
 #education .education-card {
   display: flex;
   align-items: center;
@@ -352,7 +324,6 @@ section#who {
     background 0.3s var(--ease);
 }
 
-/* تأثير hover */
 #education .education-content:hover .education-card {
   opacity: 0.5;
   transform: scale(0.98);
@@ -366,13 +337,11 @@ section#who {
   border-color: var(--accent-a);
 }
 
-/* للأوضاع الداكنة */
 body:not(.light) #education .education-content .education-card:hover,
 body:not(.light) #education .education-content .education-card:focus {
   background: #353535;
 }
 
-/* أيقونة كل بطاقة */
 #education .edu-icon {
   flex-shrink: 0;
   width: 60px;
@@ -386,7 +355,6 @@ body:not(.light) #education .education-content .education-card:focus {
   font-size: 24px;
 }
 
-/* النصوص داخل البطاقة */
 #education .edu-date {
   font-size: 14px;
   color: var(--accent-a);
@@ -406,7 +374,6 @@ body:not(.light) #education .education-content .education-card:focus {
   margin: 0;
 }
 
-/* الصورة (الجانب الأيمن) */
 #education .education-illustration {
   display: flex;
   justify-content: center;
@@ -421,10 +388,6 @@ body:not(.light) #education .education-content .education-card:focus {
 
 
 
-/* ============================================== */
-/* === سكشن المهارات (النسخة النهائية المدمجة) === */
-/* ============================================== */
-
 section#skills {
   position: relative;
   overflow:  hidden;
@@ -433,23 +396,21 @@ section#skills {
   display: flex;
   align-items: center;
 }
-  /* === هذا هو الكود الجديد والمُخفف === */
-
 body.light section#skills::before {
   background: radial-gradient(
     circle at 50% 80%,
-    rgba(120, 180, 255, 0.04),  /* <<<--- تقليل الشفافية بشكل كبير جدًا */
-    rgba(255, 200, 240, 0.03),  /* <<<--- تقليل الشفافية بشكل كبير جدًا */
+    rgba(120, 180, 255, 0.04),  
+    rgba(255, 200, 240, 0.03), 
     transparent 75%
   );
   filter: blur(60px);
-  opacity: 0.6; /* <<<--- تقليل الشفافية العامة للطبقة كلها */
+  opacity: 0.6; 
 }
 
 body.light .competency-card {
   box-shadow:
-    0 6px 20px rgba(71, 85, 105, 0.06), /* ظل أخف للكارت */
-    0 0 10px rgba(var(--accent-a-rgb), 0.08); /* توهج أقل للون الأساسي */
+    0 6px 20px rgba(71, 85, 105, 0.06), 
+    0 0 10px rgba(var(--accent-a-rgb), 0.08); 
 }
 
     body.light .scroller__inner li::before {
@@ -460,7 +421,6 @@ body.light .competency-card {
   filter: blur(12px);
 }
 
-/* ---------------------- الحاوية العامة ---------------------- */
 #skills .section-anim-container {
   width: 100%;
   max-width: 1100px;
@@ -468,7 +428,6 @@ body.light .competency-card {
   text-align: center;
 }
 
-/* ---------------------- الشريط العائم ---------------------- */
 .scroller-container {
   position: absolute;
   top: 12rem;
@@ -501,7 +460,6 @@ body.light .competency-card {
   to { transform: translateX(-80%); }
 }
 
-/* ---------------------- تصميم عناصر الشريط ---------------------- */
 .scroller__inner li {
   min-width: 130px;
   height: 130px;
@@ -521,7 +479,6 @@ body.light .competency-card {
   z-index: 1;
 }
 
-/* توهج دائم خفيف */
 .scroller__inner li::before {
   content: '';
   position: absolute;
@@ -534,7 +491,6 @@ body.light .competency-card {
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-/* التفاعل عند مرور الماوس */
 .scroller__inner:hover li {
   opacity: 0.5;
   transform: scale(0.95);
@@ -551,7 +507,6 @@ body.light .competency-card {
   filter: blur(20px);
 }
 
-/* ---------------------- الثيم الفاتح ---------------------- */
 body.light .scroller__inner li {
   background: var(--surface);
   backdrop-filter: none;
@@ -586,18 +541,17 @@ body.light .scroller:hover .scroller__inner li {
   font-size: 48px;
   margin: 0 auto 70px auto;
   position: relative;
-   color: var(--text); /* اللون الأساسي */
+   color: var(--text); 
   text-shadow: 0 0 5px rgba(var(--accent-a-rgb), 0.3);
   transition: text-shadow 0.4s ease, color 0.4s ease;
 }
 
-/* الخط الزخرفي المتوهج */
 #skills .section-title::after {
   content: '';
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -4px; /* داخل السكشن */
+  bottom: -4px; 
   width: 250px;
   height: 9px;
   border-radius: 9px;
@@ -615,7 +569,6 @@ body.light .scroller:hover .scroller__inner li {
 }
 
 
-/* ---------------------- كروت الكفاءات ---------------------- */
 .competencies-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -633,19 +586,17 @@ body.light .scroller:hover .scroller__inner li {
   transition: all 0.35s var(--ease);
 }
 
-/* الإطار المتدرج */
 .competency-card::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(45deg, var(--accent-a), var(--accent-b));
   z-index: -2;
-  opacity: 0.3; /* توهج خفيف دائم */
+  opacity: 0.3; 
   filter: blur(8px);
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-/* الطبقة الداخلية */
 .competency-card::after {
   content: '';
   position: absolute;
@@ -656,27 +607,23 @@ body.light .scroller:hover .scroller__inner li {
   transition: background-color var(--trans);
 }
 
-/* عند مرور الماوس */
 .competencies-grid:hover .competency-card {
   opacity: 0.5;
   transform: scale(0.95);
   transition: all 0.35s ease;
 }
 
-/* الكارت الفعال */
 .competencies-grid .competency-card:hover {
   opacity: 1;
   transform: scale(1.08) translateY(-10px);
   z-index: 2;
 }
 
-/* تقوية التوهج عند الهوفر */
 .competencies-grid .competency-card:hover::before {
   opacity: 0.9;
   filter: blur(18px);
 }
 
-/* ---------------------- باقي التنسيقات ---------------------- */
 .card-icon { font-size: 36px; color: var(--accent-a); margin-bottom: 15px; }
 .card-title { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
 .card-description { font-size: 15px; color: var(--muted); line-height: 1.6; }
@@ -707,11 +654,9 @@ body.light .scroller:hover .scroller__inner li {
   }
 }
 
-/* ============================================== */
-/* === تحسينات بصرية مدمجة إضافية بدون حذف القديم === */
-/* ============================================== */
 
-/* ==== تحسين ظهور الألوان في الثيم الداكن ==== */
+
+
 body:not(.light) .competency-card {
   background: linear-gradient(135deg,
     rgba(var(--accent-a-rgb), 0.12),
@@ -729,13 +674,11 @@ body:not(.light) .competencies-grid .competency-card:hover {
   box-shadow: 0 0 35px rgba(var(--accent-a-rgb), 0.4);
 }
 
-/* ==== تحسين سلاسة الهوفر ==== */
 .competency-card,
 .scroller__inner li {
   transition: all 0.22s ease-out !important;
 }
 
-/* ==== تحسين الثيم الفاتح ==== */
 body.light .competency-card {
   background: linear-gradient(145deg, #ffffff, #f3f6fb);
   box-shadow: 0 6px 25px rgba(var(--accent-a-rgb), 0.12);
@@ -749,7 +692,6 @@ body.light .competency-card:hover {
   transform: scale(1.05);
 }
 
-/* ==== تحسين الشريط العائم ==== */
 .scroller__inner li {
   box-shadow: 0 0 10px rgba(var(--accent-a-rgb), 0.15),
               inset 0 0 8px rgba(var(--accent-b-rgb), 0.1);
@@ -760,7 +702,6 @@ body.light .competency-card:hover {
   filter: blur(14px);
 }
 
-/* عند الهوفر يظهر توهج أقوى */
 .scroller__inner li:hover {
   box-shadow: 0 0 30px rgba(var(--accent-a-rgb), 0.4),
               inset 0 0 12px rgba(var(--accent-b-rgb), 0.25);
@@ -769,7 +710,6 @@ body.light .competency-card:hover {
     rgba(var(--accent-b-rgb), 0.15));
 }
 
-/* ==== توهج متدرج حول الشريط في الثيم الفاتح ==== */
 body.light .scroller__inner li {
   border: 1px solid rgba(var(--accent-a-rgb), 0.25);
   box-shadow: 0 0 18px rgba(var(--accent-a-rgb), 0.12);
@@ -780,7 +720,6 @@ body.light .scroller__inner li:hover {
               inset 0 0 10px rgba(var(--accent-b-rgb), 0.15);
 }
 
-/* ==== توهج ناعم دائم حول سكشن المهارات ==== */
 section#skills::before {
   content: '';
   position: absolute;
@@ -799,7 +738,6 @@ section#skills::before {
   0% { transform: translateY(0) scale(1); opacity: 0.8; }
   100% { transform: translateY(-10px) scale(1.05); opacity: 1; }
 }
-    /* أنيميشن التوهج المتحرك */
 @keyframes glow-move {
   0% {
     background-position: 0% 50%;
@@ -823,26 +761,24 @@ section#skills::before {
 }
 
 
-/* الحركة عند مرور الماوس */
 #skills .section-title:hover::after {
   width: 300px;
-  opacity: 0.8; /* خفف الشفافية */
+  opacity: 0.8; 
   animation: glow-move 1.6s linear infinite;
   box-shadow: 
-    0 0 10px rgba(var(--accent-a-rgb), 0.5),  /* خفف نصف القوة */
-    0 0 20px rgba(var(--accent-b-rgb), 0.3);  /* خفف نصف القوة */
+    0 0 10px rgba(var(--accent-a-rgb), 0.5),  
+    0 0 20px rgba(var(--accent-b-rgb), 0.3);  
 }
 
 #skills .section-title:hover {
-  color: var(--accent-a); /* اللون الأساسي يلمع */
+  color: var(--accent-a); 
   text-shadow:
-    0 0 4px rgba(var(--accent-a-rgb), 0.5),   /* خفف الظل للنصف */
-    0 0 8px rgba(var(--accent-b-rgb), 0.3);   /* خفف الظل للنصف */
+    0 0 4px rgba(var(--accent-a-rgb), 0.5),  
+    0 0 8px rgba(var(--accent-b-rgb), 0.3);  
 }
 
 
 
-/* في الثيم الفاتح نزيد الإضاءة شوية */
 body.light #skills .section-title::after {
   box-shadow: 0 0 15px rgba(var(--accent-a-rgb), 0.4);
   opacity: 0.9;
@@ -851,9 +787,7 @@ body.light #skills .section-title::after {
 
 
 
-/* ============================================== */
-/* === سكشن الخبرة (Experience) - نسخة نهائية مطابقة للتعليم === */
-/* ============================================== */
+/* === سكشن الخبرة (Experience)=== */
 
 section#experience {
   padding: 80px 20px;
@@ -863,7 +797,7 @@ section#experience {
   min-height: 100vh;
 }
 
-/* الشبكة العامة (مطابقة للتعليم) */
+
 .experience-grid {
   display: grid;
   grid-template-columns: 1.2fr 1.8fr; 
@@ -875,7 +809,6 @@ section#experience {
   margin-top: 55px;
 }
 
-/* حاوية المحتوى على اليمين */
 .experience-content-wrapper {
   display: flex;
   flex-direction: column;
@@ -883,7 +816,6 @@ section#experience {
 
    
 
-/* عنوان القسم (تم جعله محاذاة لليسار مثل التعليم) */
 #experience .section-title {
   text-align: left; 
   font-size: 56px;
@@ -892,13 +824,11 @@ section#experience {
 }
    
 
-/* حاوية الكروت التي سيتم تطبيق الهوفر عليها */
 .experience-cards {
   display: flex;
   flex-direction: column;
 }
 
-/* --- تصميم كروت الخبرة (مطابق للتعليم مع تحسين الأداء) --- */
 .experience-card {
   display: flex;
   align-items: center;
@@ -910,7 +840,6 @@ section#experience {
   border: 1px solid transparent;
   outline: none;
   
-  /* ✨ هذا السطر يحسن أداء الأنيميشن بشكل كبير ✨ */
   will-change: transform, opacity;
 
   transition: 
@@ -921,14 +850,11 @@ section#experience {
     background 0.3s var(--ease);
 }
 
-/* === ✨ تأثير hover مطابق للتعليم ويعمل بشكل صحيح الآن ✨ === */
-/* عند المرور على حاوية الكروت، كل الكروت تصبح شفافة */
 .experience-cards:hover .experience-card {
   opacity: 0.5;
   transform: scale(0.98);
 }
 
-/* الكرت المحدد يتم إبرازه */
 .experience-cards .experience-card:hover,
 .experience-cards .experience-card:focus {
   opacity: 1;
@@ -937,14 +863,11 @@ section#experience {
   border-color: var(--accent-a);
 }
 
-/* للأوضاع الداكنة (منسوخ من التعليم) */
 body:not(.light) #experience .experience-card:hover,
 body:not(.light) #experience .experience-card:focus {
   background: #353535;
 }
-/* ======================================================= */
 
-/* أيقونة كل بطاقة */
 .exp-icon {
   flex-shrink: 0;
   width: 60px;
@@ -958,7 +881,6 @@ body:not(.light) #experience .experience-card:focus {
   font-size: 24px;
 }
 
-/* النصوص داخل البطاقة */
 .exp-date {
   font-size: 14px;
   color: var(--accent-a);
@@ -978,7 +900,6 @@ body:not(.light) #experience .experience-card:focus {
   margin: 0;
 }
 
-/* الرسمة (الجانب الأيسر) */
 .experience-illustration {
   display: flex;
   justify-content: center;
@@ -992,9 +913,7 @@ body:not(.light) #experience .experience-card:focus {
 }
 
 
-/* ============================================== */
-/* === Projects Section (Final Polished Version) === */
-/* ============================================== */
+/* === Projects Section === */
 
 section#projects {
   padding: 100px 20px;
@@ -1018,7 +937,6 @@ section#projects {
   justify-content: center;
 }
 
-/* الكارت الأساسي */
 .project-card {
   position: relative;
   background: var(--surface);
@@ -1038,13 +956,10 @@ section#projects {
 }
 
 .project-inner {
-  /* <<< تعديل: حذف 'position: relative' */
-  /* ده هيخلي التفاصيل تتموضع بالنسبة للكارت الأساسي */
   display: flex;
   flex-direction: column;
 }
 
-/* ----------------- IMAGE ----------------- */
 .project-image {
   width: 100%;
   height: 220px;
@@ -1064,20 +979,15 @@ section#projects {
   transform: translateX(-20px);
 }
 
-/* ----------------- DETAILS (منطقة ظهور الوصف) ----------------- */
 .project-details {
   position: absolute;
-  /* <<< تعديل: هيخليها تبدأ من تحت padding الكارت */
   top: 1.75rem; 
-  /* <<< تعديل: هيخليها تبدأ من حافة الكارت بالظبط */
    left: -1.75rem; 
   height: 220px;  
   width: calc(100% + 1.75rem);
   display: flex;
   align-items: center;
-  /* <<< تعديل: المحاذاة هتبدأ من اليسار */
   justify-content: flex-start;
-  /* <<< تعديل: حذف الـ padding عشان تلزق في الحافة */
   padding: 0; 
   
   overflow: hidden;  
@@ -1090,23 +1000,18 @@ section#projects {
   opacity: 1;  
 }
 
-/* الوصف (النص) */
 .project-description {
-  /* <<< تعديل: الخلفية بقت بلون الخط */
- background: var(--bg); /* <<< تعديل: استخدمنا خلفية السكشن */  
-  /* backdrop-filter ملوش لازمة على لون صلب فتم حذفه */
+ background: var(--bg); 
   box-shadow: inset 0 0 10px rgba(var(--accent-a-rgb), 0.1);
   margin-left: 1.75rem;
   
   padding: 1rem 1.5rem;
-  /* <<< تعديل: حذف البوردر من ناحية الشمال عشان يلزق في الحافة */
   border-radius: 0 12px 12px 0;
   font-size: 0.95rem;
   line-height: 1.6;
   color: var(--text);  
   text-align: left;
   
-  /* الأنيميشن زي ما هو (هينزلق من الشمال) */
   transform: translateX(-100%);  
   opacity: 0;  
   transition: opacity 0.7s ease, transform 0.7s ease;
@@ -1121,8 +1026,6 @@ section#projects {
 }
 
 
-/* ----------------- BOTTOM ----------------- */
-/* (تم تنظيف الكود وحذف الأجزاء المتكررة) */
 .project-bottom-wrapper {
   margin-top: 1.5rem;
   display: flex;
@@ -1130,7 +1033,6 @@ section#projects {
   justify-content: space-between;
 }
 
-/* Buttons */
 .project-links {
   display: flex;
   gap: 1rem;
@@ -1169,7 +1071,6 @@ section#projects {
   transition-delay: 0.2s;
 }
 
-/* Tech List */
 .project-tech-list {
   display: flex;
   gap: 0.6rem;
@@ -1180,8 +1081,8 @@ section#projects {
 }
 
 .project-tech-list span {
-background: var(--bg); /* <<< تعديل: استخدمنا خلفية السكشن */
-  color: var(--text);    /* <<< تعديل: استخدمنا لون الخط العادي */
+background: var(--bg); 
+  color: var(--text);   
   font-size: 0.8rem;
   padding: 0.4rem 0.8rem;
   border-radius: 10px;
@@ -1203,7 +1104,6 @@ background: var(--bg); /* <<< تعديل: استخدمنا خلفية السكش
   margin-top: -20px;
 }
   
-/* ----------------- Hover Animations (الأساسيات) ----------------- */
 .project-card:hover .project-tech-list {
   opacity: 1;
   transform: translateX(0);
@@ -1214,7 +1114,6 @@ background: var(--bg); /* <<< تعديل: استخدمنا خلفية السكش
   transform: scale(1.03);
 }
 
-/* ----------------- View All Button ----------------- */
 .projects-footer {
   margin-top: 60px;
   width: 100%;
@@ -1229,7 +1128,7 @@ background: var(--bg); /* <<< تعديل: استخدمنا خلفية السكش
 .view-all-btn {
   background-color: var(--surface);
   color: var(--accent-a);
-  border: 1px solid var(--border-color); /* تأكد إن عندك المتغير ده */
+  border: 1px solid var(--border-color); 
   padding: 12px 24px;
   border-radius: 50px;
   font-weight: 600;
@@ -1239,12 +1138,11 @@ background: var(--bg); /* <<< تعديل: استخدمنا خلفية السكش
 
 .view-all-btn:hover {
   background-color: var(--accent-a);
-  color: var(--text-on-accent); /* تأكد إن عندك المتغير ده */
+  color: var(--text-on-accent); 
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(var(--accent-a-rgb), 0.4);
 }
 
-/* ----------------- Scroll Top Button ----------------- */
 .scroll-top-btn {
   position: fixed;
   bottom: 30px;
@@ -1282,9 +1180,7 @@ background: var(--bg); /* <<< تعديل: استخدمنا خلفية السكش
 
 
 
- /* ============================================== */
 /* ============ Achievements Section ============ */
-/* ============================================== */
 
 section#achievements {
   padding: 100px 40px;
@@ -1292,10 +1188,8 @@ section#achievements {
   position: relative;
   display: flex;
   align-items: center;
-  /* min-height: 100vh; ✨ تم حذف هذا السطر لحل مشكلة الارتفاع ✨ */
   font-family: inherit;
 }
-    /* ✨ تم نقل كود الفونت ليكون خاص بالسكشن ده بس ✨ */
     section#achievements .section-title,
     section#achievements .achievements-summary,
     section#achievements .card-title,
@@ -1306,19 +1200,18 @@ section#achievements {
 
 .achievements-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* ✨ تعديل النسبة لدفع الكروت يمينًا */
-  gap: 100px; /* ✨ تقليل المسافة بين العمودين */
+  grid-template-columns: 1fr 2fr; 
+  gap: 100px; 
   align-items: start;
   width: 100%;
-  max-width: 1500px; /* ✨ تقليل العرض الأقصى للسكشن */
+  max-width: 1500px; 
   margin: 0 auto;
 }
 
-/* الجزء الأيسر (النص) */
 .achievements-intro {
   text-align: left;
-  padding-left: 6rem; /* ✨ تقليل المسافة البادئة */
-  margin-top: -2rem; /* ✨ تعديل الرفع ليتناسب مع الارتفاع الجديد */
+  padding-left: 6rem; 
+  margin-top: -2rem;
 }
 
 #achievements .section-title {
@@ -1331,14 +1224,13 @@ section#achievements {
   font-size: 18px;
   line-height: 1.7;
   color: var(--muted);
-  max-width: 700px; /* ✨ تم إرجاع العرض الأصلي للنص */
+  max-width: 700px; 
 }
 
-/* الجزء الأيمن (الكروت) */
 .achievements-list {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* ✨ تقليل المسافة بين الكروت */
+  gap: 20px; 
 }
 
 .achievement-card {
@@ -1349,9 +1241,6 @@ section#achievements {
   transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
-/* ================================== */
-/* === ✨ تأثير الفوكس جروب الملون ✨ === */
-/* ================================== */
 
 .achievements-list:hover .achievement-card {
   opacity: 0.5;
@@ -1366,7 +1255,6 @@ section#achievements {
   box-shadow: 0 8px 30px rgba(var(--accent-a-rgb), 0.3), 0 0 15px rgba(var(--accent-b-rgb), 0.2);
 }
 
-/* ================================== */
 
 .card-content {
   display: flex;
@@ -1417,15 +1305,12 @@ section#achievements {
 .card-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* ✨ تم التعديل إلى contain لضمان ظهور اللوجو كامل */
+  object-fit: contain; 
 }
 
 
 
-	  /* ============================================== */
 /* ============= Contact Section ============= */
-/* ============================================== */
-
 section#contact {
   padding: 100px 40px;
   background-color: var(--background);
@@ -1437,15 +1322,14 @@ section#contact {
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr; /* تقسيم الشاشة لثلاثة أعمدة */
+  grid-template-columns: 1.2fr 1fr 1fr; 
   gap: 50px;
-  align-items: flex-start; /* المحاذاة للبداية (الأعلى) */
+  align-items: flex-start; 
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* === الجزء الأيسر (الفورم) === */
 .contact-form-wrapper {
   text-align: left;
 }
@@ -1518,9 +1402,8 @@ section#contact {
   transform: rotate(-30deg);
 }
 
-/* === الجزء الأوسط (معلومات التواصل) === */
 .contact-info-wrapper {
-  padding-top: 185px; /* لإنزال المحتوى تحت العنوان */
+  padding-top: 185px; 
 }
 
 .contact-details-list {
@@ -1568,29 +1451,27 @@ section#contact {
   transform: scale(1.1);
 }
 
-/* === الجزء الأيمن (الرسومات) === */
 .contact-graphics {
-  position: absolute; /* ✨ نقطة التحول: هنجعلها مطلقة ✨ */
-  right: 100px; /* ✨ أقصى اليمين، بنفس مسافة البادينج ✨ */
-  bottom: 25px; /* ✨ تحت خالص، قبل الفوتر بشوية ✨ */
-  width: 250px; /* ✨ تحديد عرض مناسب (تقدر تعدله) ✨ */
-  z-index: 1; /* ✨ عشان تكون فوق أي حاجة تانية لو حصل تداخل ✨ */
-  pointer-events: none; /* ✨ عشان متعيقش التفاعل مع الفورم لو لمستها ✨ */
+  position: absolute;
+  right: 100px; 
+  bottom: 25px; 
+  width: 250px; 
+  z-index: 1; 
+  pointer-events: none; 
 }
 .contact-svg {
-  width: 100%; /* ✨ عشان الرسمة تاخد عرض الأب بتاعها ✨ */
+  width: 100%; 
   height: auto;
-  display: block; /* ✨ إزالة أي مسافات زائدة حول الـ SVG ✨ */
+  display: block; 
 }
 .contact-svg path {
   transition: fill 0.4s ease;
-  fill: var(--surface); /* استخدام لون السيرفس بدل الأبيض */
+  fill: var(--surface);
 }
 .contact-svg path:last-child {
-  fill: var(--accent-a); /* الهاتف يظل باللون الأساسي */
+  fill: var(--accent-a); 
 }
 
-/* === الفوتر === */
 .main-footer {
   padding: 25px;
   text-align: center;
@@ -1606,11 +1487,8 @@ section#contact {
 
     
     
-/* ============================================== */
 /* === تصميم الانترو (النسخة النهائية والمحسنة) === */
-/* ============================================== */
 
-/* 1. القاعدة الأساسية */
 section#hero.split-hero {
   display: grid !important;
   grid-template-columns: 40% 60%;
@@ -1620,7 +1498,6 @@ section#hero.split-hero {
   overflow: hidden;
 }
 
-/* 2. الجزء الشمال */
 .split-left {
   display: flex;
   flex-direction: column;
@@ -1631,38 +1508,35 @@ section#hero.split-hero {
 }
 
 .split-left .logo-name {
-  font-family: 'Dancing Script', cursive; /* <<<--- هنا استخدمنا الخط الجديد */
-  font-weight: 700; /* بنستخدم الوزن الثقيل عشان يبان واضح وجميل */
-  font-size: 32px; /* <<<--- كبرنا حجم الخط عشان يليق بستايل التوقيع */
+  font-family: 'Dancing Script', cursive; 
+  font-weight: 700; 
+  font-size: 32px; 
   align-self: flex-start;
-  color: rgba(255, 255, 255, 0.95); /* ممكن نخليه أفتح شوية */
+  color: rgba(255, 255, 255, 0.95); 
    margin-left: 40px;
 }
 
-/* أيقونات السوشيال ميديا (كبرناها) */
 .split-left .social-links {
   margin-top: auto;
   display: flex;
-  gap: 28px; /* <<<--- زودنا المسافة */
+  gap: 28px; 
 }
 .split-left .social-links a {
-  font-size: 26px; /* <<<--- كبرنا حجم الأيقونات */
+  font-size: 26px; 
 }
 
-/* 3. حاوية الصورة (كبرناها أكتر) */
 .hero-image-container {
   position: absolute;
   top: 50%;
   right: 0; 
   transform: translate(50%, -50%); 
   z-index: 10;
-  width: 360px; /* <<<--- كبرنا الصورة */
-  height: 360px; /* <<<--- كبرنا الصورة */
+  width: 360px; 
+  height: 360px; 
   border-radius: 50%;
   box-shadow: 0 10px 60px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
-    /* بنرجع لون الإطار للونه الأصلي في الثيم الفاتح بس */
 body.light .hero-image-container {
     border-color: var(--bg);
 }
@@ -1673,22 +1547,19 @@ body.light .hero-image-container {
   object-fit: cover;
 }
 
-/* 4. الجزء اليمين (حركناه وكبرناه أكتر) */
 .split-right {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   background: var(--bg);
-  /* زودنا البادينج من الشمال عشان نبعد عن الصورة أكتر */
-  padding: 40px 100px 40px 500px; /* <<<--- زودنا القيمة من 240px إلى 280px */
+  padding: 40px 100px 40px 500px; 
 }
 
-/* كبرنا حجم النصوص */
 .hero-main-name {
   font-size: 48px !important;
   font-weight: 700;
   color: var(--text);
-  margin: 0 0 12px 0; /* <<<--- قللنا المسافة اللي تحت الاسم من 16px إلى 12px */
+  margin: 0 0 12px 0; 
   line-height: 1;
 }
 .hero-intro-text {
@@ -1696,75 +1567,65 @@ body.light .hero-image-container {
   line-height: 1.7;
   color: var(--muted);
   max-width: 600px;
-  margin-top: 0; /* <<<--- أهم تعديل: لغينا المسافة اللي فوق الفقرة تمامًا */
-  margin-bottom: 32px; /* زودنا المسافة قبل الأزرار شوية عشان التوازن */
+  margin-top: 0; 
+  margin-bottom: 32px; 
 }
 .sub-heading {
   font-size: 16px !important;
   color: var(--muted);
   font-weight: 600;
-  margin-bottom: 4px; /* <<<--- قللنا المسافة من 8px إلى 4px */
+  margin-bottom: 4px; 
 }
 
-/* 5. الزرارين (كبرناهم) */
 .split-right .cta .btn-primary,
 .split-right .cta .btn-ghost {
-  padding: 16px 32px; /* <<<--- زودنا البادينج عشان يكبروا */
+  padding: 16px 32px; 
   font-size: 16px;
 }
 
-    /* Hero button overrides for white background */
     .split-left .cta .btn-primary {
         background: white;
-        color: var(--accent-a); /* لون النص يصبح لون الخلفية */
+        color: var(--accent-a);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
     .split-left .cta .btn-ghost {
         color: white;
         border-color: rgba(255, 255, 255, 0.3);
     }
-    /* ---- أضف هذه الأكواد الجديدة للـ CSS ---- */
 
-/* 1. تعديل لون زرار المنيو الأصلي */
 #menuBtn {
-  background: var(--accent-a); /* اللون البنفسجي */
-  color: white; /* لون الأيقونة أبيض */
+  background: var(--accent-a); 
+  color: white; 
   transition: all .3s var(--ease);
 }
 
-/* 2. إخفاء الزرار الأصلي لما القائمة تتفتح */
 body.drawer-open .top-left {
   opacity: 0;
-  pointer-events: none; /* عشان ميستقبلش أي كليكات وهو مختفي */
+  pointer-events: none; 
   transform: scale(0.9);
 }
 
-/* 3. ستايل زرار الإغلاق الجديد */
 .close-btn {
   position: absolute;
   top: 14px;
   right: 14px;
-  background: rgba(255,255,255,0.15); /* خلفية شفافة مميزة */
+  background: rgba(255,255,255,0.15); 
   color: white;
-  opacity: 0; /* مخفي في العادي */
+  opacity: 0; 
   pointer-events: none;
   transform: scale(0.8);
   transition: all .3s var(--ease);
-  z-index: 210; /* عشان يكون فوق كل حاجة في القائمة */
+  z-index: 210; 
 }
 
-/* 4. إظهار زرار الإغلاق لما القائمة تتفتح */
 .drawer.expanded .close-btn {
   opacity: 1;
   pointer-events: auto;
   transform: scale(1);
 }
 
-/* ============================================== */
-/* =========== ✨ Mobile Responsive Fixes ✨ =========== */
-/* ============================================== */
+/* ===========  Mobile Responsive Fixes =========== */
 
-/* === للشاشات الكبيرة فقط (أكبر من 980px) === */
 @media (min-width: 981px) {
   .split-right {
     padding: 40px 100px 40px 280px;
@@ -1772,22 +1633,19 @@ body.drawer-open .top-left {
 }
 
 
-/* === للتابلت والشاشات الأصغر (أقل من 980px) === */
 @media (max-width: 980px) {
   
-  /* 1. تعديلات عامة للسكاشن */
   section {
     min-height: auto; 
     padding: 80px 30px !important; 
   }
 
-  /* 2. تصغير كل عناوين السكاشن */
   #hero .section-title,
   #projects .section-title,
   #who .who-content h2, 
   #skills .section-title,
   #education .section-title.left-aligned,
-  #experience .section-title, /* ✨ تمت إضافة سكشن الخبرة ✨ */
+  #experience .section-title, 
   #achievements .section-title,
   #contact .section-title {
     font-size: 48px; 
@@ -1837,7 +1695,7 @@ body.drawer-open .top-left {
 }
   .who-illustration { order: 1; width: 100%; text-align: center; }
  .who-illustration .illustration-svg { 
-  max-width: 180px !important; /* 👈 تصغير أكتر */
+  max-width: 180px !important;
   height: auto;
   margin: 0 auto;
 }
@@ -1847,7 +1705,7 @@ body.drawer-open .top-left {
   top: 8rem;
   -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
   mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
-  margin-bottom: 150px; /* 👈 مسافة فاصلة بين الاسكرولر والجزء اللي تحته */
+  margin-bottom: 150px; 
 }
  .scroller__inner li { 
   min-width: 110px; 
@@ -1856,8 +1714,8 @@ body.drawer-open .top-left {
 }
   .competencies-container { 
   margin-top: 120px;
-  padding: 0 20px 60px; /* 👈 بادنجمريح */
-  max-width: 1500px; /* 👈 علشان ميتمدش على الشاشه الكبيرة */
+  padding: 0 20px 60px; 
+  max-width: 1500px; 
   margin-left: auto;
   margin-right: auto;
 }
@@ -1881,8 +1739,8 @@ body.drawer-open .top-left {
   width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
-  align-items: center !important; /* 👈 النص ف النص */
-  text-align: center !important;  /* 👈 كل الكلام ف النص */
+  align-items: center !important; 
+  text-align: center !important;  
   padding: 25px 20px !important;
   border-radius: 14px !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
@@ -1892,7 +1750,7 @@ body.drawer-open .top-left {
 	transform: scale(0.95);
 }
 	.competency-card:hover {
-  transform: scale(1.02) translateY(-5px); /* 👈 ما زال فيها حركة بسيطة عند الهوفر */
+  transform: scale(1.02) translateY(-5px); 
 }
 	.competency-card .card-icon {
   display: none !important;
@@ -1901,13 +1759,13 @@ body.drawer-open .top-left {
 
 	
 .competency-card .card-title {
-  font-size: 16px !important;   /* 👈 صغر الخط */
+  font-size: 16px !important;  
   font-weight: 600 !important;
   color: var(--text) !important;
   margin-bottom: 6px !important;
 }
 	#skills .section-title::after {
-  bottom: -6px !important; /* 👈 كان -4px نزلناه لتحت */
+  bottom: -6px !important; 
   height: 8px !important;
   opacity: 0.9 !important;
 }
@@ -1922,13 +1780,13 @@ body.drawer-open .top-left {
   margin: 0 !important;
 }
 	#skills .section-subtitle {
-  font-size: 14px !important;   /* 👈 صغّر الخط */
+  font-size: 14px !important;  
   color: var(--muted) !important;
   line-height: 1.6 !important;
-  max-width: 480px !important;  /* 👈 خليها أضيق شوية */
-  margin: -20px auto 40px auto !important; /* 👈 قلل المسافة فوق وتحت */
+  max-width: 480px !important; 
+  margin: -20px auto 40px auto !important; 
   text-align: center !important;
-  opacity: 0.85 !important; /* 👈 درجة خفيفة من الشفافية */
+  opacity: 0.85 !important; 
 }
 
 
@@ -1952,8 +1810,8 @@ body.drawer-open .top-left {
   height: 40px;
   background: var(--accent-a);
   border-radius: 50%;
-  color: white;              /* 👈 لون الأيقونة */
-  display: flex;             /* لتوسيط الأيقونة */
+  color: white;             
+  display: flex;          
   align-items: center;
   justify-content: center;
   font-size: 18px;
@@ -1967,37 +1825,37 @@ body.drawer-open .top-left {
 
 /* --- Experience Section --- */
   #experience .section-title {
-    font-size: 36px; /* تصغير العنوان */
+    font-size: 36px;
     margin-bottom: 30px;
     text-align: center;
   }
   #experience .experience-grid {
     grid-template-columns: 1fr;
-    max-width: 100%; /* ياخد عرض الشاشة بالكامل */
+    max-width: 100%; 
     gap: 20px;
-    padding: 0; /* إلغاء البادينج الداخلي للجريد */
+    padding: 0;
   }
   #experience .experience-illustration {
-    display: none !important; /* إخفاء الرسمة */
+    display: none !important; 
   }
   #experience .experience-card {
-    padding: 15px 20px; /* تصغير البادينج */
-    gap: 10px; /* تقليل المسافة الداخلية */
+    padding: 15px 20px; 
+    gap: 10px;
   }
   #experience .exp-icon {
-    display: none !important; /* إخفاء الأيقونة */
+    display: none !important; 
   }
   #experience .exp-text {
-    gap: 3px; /* تقليل المسافة بين النصوص */
+    gap: 3px; 
   }
   #experience .exp-title {
-    font-size: 15px; /* تصغير الخط */
+    font-size: 15px; 
   }
   #experience .exp-company {
-    font-size: 14px; /* تصغير الخط */
+    font-size: 14px;
   }
    #experience .exp-date {
-     font-size: 13px; /* تصغير الخط */
+     font-size: 13px; 
    }
 
 	  #experience .exp-icon {
@@ -2008,13 +1866,13 @@ body.drawer-open .top-left {
 
 /* --- Achievements Section --- */
   #achievements .section-title {
-    font-size: 36px; /* تصغير العنوان */
+    font-size: 36px; 
     margin-bottom: 30px;
     text-align: center;
   }
   .achievements-grid {
     grid-template-columns: 1fr;
-    max-width: 100%; /* ياخد عرض الشاشة */
+    max-width: 100%; 
     gap: 20px;
     padding: 0;
   }
@@ -2024,34 +1882,34 @@ body.drawer-open .top-left {
     text-align: center;
   }
    .achievements-summary {
-    max-width: 95%; /* ياخد عرض الشاشة */
+    max-width: 95%; 
     font-size: 14px;
    }
   .achievement-card .card-content {
-    padding: 15px 20px; /* تصغير البادينج */
+    padding: 15px 20px; 
     gap: 15px;
-    flex-direction: column; /* تحت بعض */
+    flex-direction: column; 
     text-align: center;
   }
   .achievement-card .card-info {
-    order: 1; /* الكلام يجي الأول */
+    order: 1; 
   }
   .achievement-card .card-title {
-    font-size: 16px; /* تصغير الخط */
+    font-size: 16px;
   }
   .achievement-card .card-description {
-    font-size: 13px; /* تصغير الخط */
+    font-size: 13px; 
     margin-bottom: 10px;
   }
   .achievement-card .card-meta {
-    font-size: 12px; /* تصغير الخط */
+    font-size: 12px; 
     justify-content: center;
   }
    .achievement-card .card-meta i {
-     display: none !important; /* إخفاء الأيقونة */
+     display: none !important; 
    }
   .achievement-card .card-image {
-    display: none !important; /* إخفاء الصورة */
+    display: none !important; 
   }
 
 	
@@ -2063,7 +1921,7 @@ body.drawer-open .top-left {
   #contact .section-title { text-align: center; }
 
 	 .main-footer {
-    font-size: 14px;    /* نص أصغر للموبايل */
+    font-size: 14px;    
     padding: 18px 10px;
   }
 }
@@ -2089,13 +1947,13 @@ body.drawer-open .top-left {
   /* --- Who Am I Section --- */
   .who-content h2 { font-size: 40px; }
   .who-content p { font-size: 16px; }
-  .who-illustration .illustration-svg { max-width: 300px; } /* ✨ تم تصغير الرسمة ✨ */
+  .who-illustration .illustration-svg { max-width: 300px; } 
   
   /* --- Education Section --- */
   #education .education-card { padding: 20px; }
   #education .edu-title { font-size: 16px; }
 
-  /* --- Experience Section (✨ جديد ✨) --- */
+  /* --- Experience Section  --- */
   #experience .experience-card { padding: 20px; }
   #experience .exp-title { font-size: 18px; }
 
@@ -2137,12 +1995,10 @@ body.drawer-open .top-left {
   </style>
 </head>
 <body>
-  <!-- top-left: menu -->
   <div class="top-left" aria-hidden="false">
     <button id="menuBtn" class="icon-btn" aria-label="Open menu">☰</button>
   </div>
 
-  <!-- top-right: theme + mute -->
   <div class="top-right" aria-hidden="false">
     <button id="themeBtn" class="icon-btn" aria-label="Toggle theme">🌙</button>
     <button id="muteBtn" class="icon-btn" aria-label="Mute sounds">🔊</button>
@@ -2175,7 +2031,7 @@ body.drawer-open .top-left {
   <div class="label">Projects</div>
 </div>
 
-<div class="menu-item" data-target="#Achievements" role="menuitem" tabindex="0">
+<div class="menu-item" data-target="#achievements" role="menuitem" tabindex="0">
 <div class="icon-box"><i class="fa-solid fa-trophy"></i></div>
 <div class="label">Achievements</div>
 </div>
