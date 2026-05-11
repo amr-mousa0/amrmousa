@@ -1798,21 +1798,22 @@
       margin-left: 40px;
     }
 
-  .hero-image-container {
-  position: absolute;
-  top: 50%;
-  right: 0; 
-  transform: translate(50%, -50%); 
-  z-index: 10;
-  width: 360px; 
-  height: 360px; 
-  border-radius: 50%;
-  box-shadow: 0 10px 60px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-}
-body.light .hero-image-container {
-    border-color: var(--bg);
-}
+    .hero-image-container {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(50%, -50%);
+      z-index: 10;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      box-shadow: 0 10px 60px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+    }
+
+    body.light .hero-image-container {
+      border-color: var(--bg);
+    }
 
     @keyframes morphing {
       0% {
@@ -2568,7 +2569,14 @@ body.light .hero-image-container {
         font-size: 20px;
       }
 
-       .hero-image-container { position: relative; transform: translate(0, 0); margin:-60px auto 30px auto;  top: 120px; width: 220px; height: 220px;}
+      .hero-image-container {
+        position: relative;
+        transform: translate(0, 0);
+        margin: -60px auto 30px auto;
+        top: 120px;
+        width: 220px;
+        height: 220px;
+      }
 
 
       .split-right {
@@ -2739,10 +2747,133 @@ body.light .hero-image-container {
       color: #d1d5db;
       font-family: 'Poppins', sans-serif;
     }
+    .mobile-break {
+      display: none;
+    }
 
     @media (max-width: 980px) {
+      .mobile-break {
+        display: block;
+      }
       .idea-text {
         display: none;
+      }
+
+      /* --- Hero Responsive --- */
+      .split-hero {
+        flex-direction: column !important;
+      }
+
+      .split-left,
+      .split-right {
+        width: 100% !important;
+        height: 50% !important;
+      }
+
+      .split-right {
+        padding: 40px 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .hero-text-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .hero-intro-text {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      .hero-image-container {
+        position: relative;
+        transform: translate(0, 0);
+        margin: -60px auto 30px auto;
+        top: 120px;
+        width: 220px;
+        height: 220px;
+      }
+
+
+      /* --- Layouts & Grids --- */
+      .section-inner,
+      .experience-grid,
+      .achievements-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+
+      /* Core Skills alignment */
+      .competencies-grid {
+        align-items: center !important;
+      }
+
+      .competency-card {
+        margin: 0 auto !important;
+      }
+
+      .competency-info,
+      .competency-info h3,
+      .competency-info p {
+        text-align: center !important;
+      }
+
+      .who-content,
+      .about-content {
+        flex-direction: column !important;
+        gap: 30px !important;
+      }
+
+      .who-text,
+      .who-image-container {
+        width: 100% !important;
+        padding: 0 !important;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* --- Utilities & Footer --- */
+      .achievements-intro {
+        text-align: center !important;
+        align-items: center !important;
+      }
+
+      .footer-container,
+      .contact-container {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 20px !important;
+      }
+
+      /* --- Typography Scaling --- */
+      #who .section-title,
+      #experience .section-title,
+      #projects .section-title,
+      .hero-title {
+        font-size: 36px !important;
+        text-align: center !important;
+      }
+
+      .hero-desc {
+        font-size: 16px !important;
+        max-width: 100% !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 32px !important;
+      }
+
+      .drawer.expanded {
+        width: 260px !important;
       }
     }
   </style>
@@ -2842,7 +2973,7 @@ body.light .hero-image-container {
           <div class="sub-heading">Data & Marketing Analyst</div>
           <p class="hero-skills-text">SQL • Power BI • Python • Media Buying • Content Strategy</p>
 
-          <p class="hero-intro-text">I use data to understand systems, and marketing to <span
+          <p class="hero-intro-text">I use data to understand systems, <br class="mobile-break">and marketing to <span
               class="understand-people">understand people.</span></p>
           <div class="cta">
             <button class="btn-primary" onclick="window.open('files/Amr hazem.pdf')">Download CV</button>
