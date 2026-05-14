@@ -2046,36 +2046,70 @@
 
       /* --- Hero Section --- */
 
+      section#hero.split-hero {
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important;
+        min-height: 100vh;
+        position: relative;
+      }
+
       .split-left {
-        padding: 30px 20px 20px 20px;
-        min-height: 200px;
-        justify-content: space-between;
+        padding: 0;
+        min-height: 130px;
+        height: 130px !important;
+        width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
       }
 
-      .split-left .logo-name {
-        margin-left: 0;
-        align-self: flex-start;
-        margin-bottom: 20px;
-        top: 80px;
-      }
-
-      .split-left .social-links {
+      .split-left .logo-name,
+      .split-left .social-links,
+      .idea-text,
+      .split-right .cta .btn-ghost {
         display: none !important;
       }
 
+      .learn-more-indicator {
+        display: flex !important;
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        transform: none !important;
+        margin-top: 0;
+        margin-bottom: 25px;
+        flex-direction: column;
+        align-items: center;
+        align-self: center;
+        z-index: 50;
+      }
+
       .hero-image-container {
-        position: relative;
-        transform: translate(0, 0);
-        margin: -60px auto 30px auto;
-        top: 120px;
-        width: 220px;
-        height: 220px;
+        position: relative !important;
+        transform: translateY(35%) !important;
+        top: auto !important;
+        bottom: auto !important;
+        margin: 0 auto !important;
+        width: 180px !important;
+        height: 180px !important;
+        flex-shrink: 0 !important;
+        z-index: 10;
+        border: 6px solid var(--surface);
+      }
+
+      body.light .hero-image-container {
+        border-color: var(--light-surface);
       }
 
       .split-right {
-        padding: 0 20px 60px 20px;
-        margin-top: 80px;
-        display: flex;
+        width: 100% !important;
+        height: auto !important;
+        flex: 1;
+        padding: 80px 20px 40px 20px !important;
+        margin-top: 0 !important;
+        display: flex !important;
         flex-direction: column;
         align-items: center;
         justify-content: center;
@@ -2085,6 +2119,12 @@
       .hero-main-name {
         font-size: 38px !important;
         margin-bottom: 10px;
+        text-align: center !important;
+      }
+
+      .sub-heading,
+      .hero-skills-text {
+        text-align: center !important;
       }
 
       .hero-intro-text {
@@ -2092,6 +2132,7 @@
         max-width: 85%;
         margin: 0 auto 25px auto;
         line-height: 1.7;
+        text-align: center !important;
       }
 
       .split-right .cta {
@@ -2101,27 +2142,30 @@
         gap: 15px;
       }
 
-      section#hero.split-hero {
-        grid-template-columns: 1fr;
-        height: auto;
-      }
+      @keyframes pulseCTA {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 10px 25px rgba(var(--accent-a-rgb), 0.2);
+        }
 
-      .split-right .cta .btn-ghost {
-        display: none !important;
-      }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 15px 35px rgba(var(--accent-a-rgb), 0.5);
+        }
 
-      .learn-more-indicator {
-        display: none !important;
-      }
-
-      .idea-text {
-        display: none !important;
+        100% {
+          transform: scale(1);
+          box-shadow: 0 10px 25px rgba(var(--accent-a-rgb), 0.2);
+        }
       }
 
       .split-right .cta .btn-primary {
-        padding: 14px 28px;
-        font-size: 15px;
-        opacity: 0.9;
+        padding: 16px 36px;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        opacity: 1;
+        animation: pulseCTA 3s infinite;
       }
 
       /* --- Who Am I Section --- */
@@ -2557,30 +2601,23 @@
 
       /* --- Hero Section --- */
       .split-left {
-        padding: 20px 15px 15px 15px;
-        min-height: 150px;
+        padding: 20px 15px 0 15px;
+        min-height: 200px;
       }
 
       .split-left .logo-name {
         font-size: 28px;
-      }
-
-      .split-left .social-links a {
-        font-size: 20px;
+        top: 20px;
+        left: 15px;
       }
 
       .hero-image-container {
-        position: relative;
-        transform: translate(0, 0);
-        margin: -60px auto 30px auto;
-        top: 120px;
-        width: 220px;
-        height: 220px;
+        width: 200px !important;
+        height: 200px !important;
       }
 
-
       .split-right {
-        padding: 30px 15px 50px 15px;
+        padding: 130px 15px 50px 15px !important;
       }
 
       .hero-main-name {
@@ -2589,13 +2626,6 @@
 
       .hero-intro-text {
         font-size: 15px !important;
-      }
-
-      .split-right .cta {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
       }
 
       /* --- Skills Section --- */
@@ -2747,57 +2777,21 @@
       color: #d1d5db;
       font-family: 'Poppins', sans-serif;
     }
+
     .mobile-break {
       display: none;
     }
 
     @media (max-width: 980px) {
       .mobile-break {
-        display: block;
+        display: none !important;
       }
+
       .idea-text {
         display: none;
       }
 
-      /* --- Hero Responsive --- */
-      .split-hero {
-        flex-direction: column !important;
-      }
-
-      .split-left,
-      .split-right {
-        width: 100% !important;
-        height: 50% !important;
-      }
-
-      .split-right {
-        padding: 40px 20px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        text-align: center !important;
-      }
-
-      .hero-text-content {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        text-align: center !important;
-      }
-
-      .hero-intro-text {
-        max-width: 100% !important;
-        width: 100% !important;
-      }
-
-      .hero-image-container {
-        position: relative;
-        transform: translate(0, 0);
-        margin: -60px auto 30px auto;
-        top: 120px;
-        width: 220px;
-        height: 220px;
-      }
+      /* --- Hero Responsive Overrides Cleaned --- */
 
 
       /* --- Layouts & Grids --- */
@@ -2982,10 +2976,199 @@
         </div>
       </div>
 
-      <a href="#who" class="learn-more-indicator" onclick="event.preventDefault(); goToSection('#who')">
-        <span class="learn-more-text">Learn More</span>
-        <i class="fa-solid fa-chevron-down"></i>
-      </a>
+      <!-- impeccable-carbonize-start 98f84fe7 -->
+      <style data-impeccable-css="98f84fe7">
+        @keyframes variant-bounce {
+
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(6px);
+          }
+        }
+
+        @keyframes variant-pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(0, 77, 97, 0.4);
+          }
+
+          70% {
+            box-shadow: 0 0 0 15px rgba(0, 77, 97, 0);
+          }
+
+          100% {
+            box-shadow: 0 0 0 0 rgba(0, 77, 97, 0);
+          }
+        }
+
+        @keyframes variant-float {
+
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+
+          50% {
+            transform: translateY(-3px);
+          }
+        }
+
+        @keyframes variant-slide {
+          0% {
+            transform: translateY(0);
+          }
+
+          100% {
+            transform: translateY(80px);
+          }
+        }
+
+        /* Variant 1: Glass Pill */
+        @scope ([data-impeccable-variant="1"]) {
+          :scope>div {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+          }
+
+          :scope a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text);
+            background: rgba(41, 41, 41, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 12px 24px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s var(--ease);
+            animation: variant-float 3s infinite ease-in-out;
+          }
+
+          :scope a:hover {
+            background: rgba(41, 41, 41, 0.6);
+            border-color: var(--accent-a);
+            transform: translateY(-5px);
+          }
+
+          :scope .learn-more-text {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            opacity: 0.8;
+          }
+
+          :scope i {
+            font-size: 18px;
+            color: var(--accent-a);
+            animation: variant-bounce 2s infinite ease-in-out;
+          }
+        }
+
+        /* Variant 2: Pulsing Anchor */
+        @scope ([data-impeccable-variant="2"]) {
+          :scope>div {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+          }
+
+          :scope a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--muted);
+            transition: color 0.3s;
+          }
+
+          :scope .learn-more-text {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            font-weight: 700;
+          }
+
+          :scope .icon-wrapper {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: variant-pulse 2s infinite;
+          }
+
+          :scope i {
+            animation: variant-bounce 1.5s infinite ease-in-out;
+          }
+        }
+
+        /* Variant 3: Minimalist Flow */
+        @scope ([data-impeccable-variant="3"]) {
+          :scope>div {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+          }
+
+          :scope a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--accent-a);
+            transition: all 0.3s;
+          }
+
+          :scope .learn-more-text {
+            display: none;
+          }
+
+          :scope .indicator-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, var(--accent-a));
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+          }
+
+          :scope .indicator-line::after {
+            content: "";
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            animation: variant-slide 2s infinite;
+          }
+
+          :scope i {
+            font-size: 24px;
+            animation: variant-bounce 2s infinite;
+          }
+        }
+      </style>
+      <!-- impeccable-carbonize-end 98f84fe7 -->
+      <div data-impeccable-variant="3" style="display: contents">
+        <a href="#who" class="learn-more-indicator" onclick="event.preventDefault(); goToSection('#who')">
+          <div class="indicator-line"></div>
+          <i class="fa-solid fa-chevron-down"></i>
+        </a>
+      </div>
 
     </section>
 
@@ -8762,6 +8945,9 @@
 
 
   </script>
+  <!-- impeccable-live-start -->
+  <script src="http://localhost:8400/live.js"></script>
+  <!-- impeccable-live-end -->
 </body>
 
 </html>
