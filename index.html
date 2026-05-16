@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8" />
@@ -22,11 +22,13 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
     rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cairo:wght@300;400;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
 
   <style>
     /* ---------------- Variables & Themes ---------------- */
@@ -36,7 +38,7 @@
       --ease: cubic-bezier(.2, .9, .3, 1);
       --trans: 360ms var(--ease);
 
-      --light-bg: #f6f8fb;
+      --light-bg: #f3f4f7;
       --light-surface: #ffffff;
       --light-surface-rgb: 255, 255, 255;
       --light-text: #071026;
@@ -47,15 +49,15 @@
       --light-accent-b-rgb: 11, 59, 102;
 
 
-      --dark-bg: #1A1A1A;
-      --dark-surface: #292929;
-      --dark-surface-rgb: 41, 41, 41;
-      --dark-text: #F0F0F0;
-      --dark-muted: #999999;
-      --dark-accent-a: #004D61;
-      --dark-accent-a-rgb: 0, 77, 97;
-      --dark-accent-b: #822659;
-      --dark-accent-b-rgb: 130, 38, 89;
+      --dark-bg: #141416;
+      --dark-surface: #1f2023;
+      --dark-surface-rgb: 31, 32, 35;
+      --dark-text: #ede9e4;
+      --dark-muted: #8a8580;
+      --dark-accent-a: #006679;
+      --dark-accent-a-rgb: 0, 102, 121;
+      --dark-accent-b: #9b2e68;
+      --dark-accent-b-rgb: 155, 46, 104;
 
 
       --bg: var(--dark-bg);
@@ -87,16 +89,23 @@
       box-sizing: border-box
     }
 
+    /* Fallback so html/body area outside main stays consistent */
+    html {
+      background-color: #0e0e10;
+    }
+
     html,
     body {
       height: 100%;
       margin: 0;
       font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color: var(--text);
-      background: var(--bg);
-      transition: background var(--trans), color var(--trans);
+      background-color: var(--bg);
+      transition: background-color var(--trans), color var(--trans);
       overflow-x: hidden;
     }
+
+
 
     a {
       text-decoration: none;
@@ -115,12 +124,46 @@
       background: none
     }
 
+    /* ---- Luxury Grid Background on main (the real scroll container) ---- */
     main {
       height: 100vh;
       overflow-y: auto;
       overflow-x: hidden;
       scroll-behavior: smooth;
       scroll-snap-type: y proximity;
+
+      /* DARK MODE grid (default) */
+      background-color: #0e0e10;
+      background-image:
+        radial-gradient(ellipse 80% 70% at 50% 40%, transparent 25%, rgba(6, 6, 8, 0.8) 100%),
+        radial-gradient(ellipse 65% 55% at 5% 0%, rgba(0, 102, 121, 0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 45% at 95% 100%, rgba(140, 40, 95, 0.10) 0%, transparent 60%),
+        linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size:
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        40px 40px,
+        40px 40px;
+      background-attachment: local, local, local, local, local;
+      transition: background-color var(--trans);
+    }
+
+    /* LIGHT MODE grid */
+    body.light main {
+      background-color: #f2f3f7;
+      background-image:
+        radial-gradient(ellipse 75% 65% at 50% 30%, rgba(255,253,248,0.75) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 45% at 5% 0%, rgba(200,220,255,0.22) 0%, transparent 60%),
+        linear-gradient(to right, rgba(80,90,120,0.09) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(80,90,120,0.09) 1px, transparent 1px);
+      background-size:
+        100% 100%,
+        100% 100%,
+        40px 40px,
+        40px 40px;
+      background-attachment: local, local, local, local;
     }
 
     section {
@@ -136,40 +179,181 @@
       margin: 0 auto;
     }
 
-    /* ---------------- Top controls ---------------- */
-    .top-left,
-    .top-right {
+    /* ---------------- Luxury Header & Controls ---------------- */
+    .luxury-header {
       position: fixed;
-      z-index: 200;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 1200px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 32px;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px 0 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.02);
+      z-index: 180;
+      transition: all 0.5s var(--ease);
+    }
+
+    body.light .luxury-header {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.4s var(--ease);
+    }
+
+    body.drawer-open .header-left {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
       gap: 10px;
-      align-items: center
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.3s var(--ease);
+      text-decoration: none;
     }
 
-    .top-left {
-      left: 16px;
-      top: 14px
+    .header-brand:hover {
+      background: rgba(255, 255, 255, 0.04);
     }
 
-    .top-right {
-      right: 16px;
-      top: 14px
+    body.light .header-brand:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-a);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent-a);
+      animation: pulse-dot 2s infinite var(--ease);
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .brand-text {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: var(--text);
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 4px;
+      border-radius: 24px;
+    }
+
+    body.light .header-nav {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-link {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    body.light .nav-link:hover {
+      color: var(--text);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-link.active {
+      color: var(--text-on-accent);
+      background: var(--accent-a);
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(var(--accent-a-rgb), 0.3);
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .icon-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: var(--surface);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 12px 36px rgba(2, 6, 23, 0.5);
-      transition: transform .14s ease, background var(--trans)
+      color: var(--text);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s var(--ease);
+      cursor: pointer;
+    }
+
+    body.light .icon-btn {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.08);
+      color: var(--text);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    }
+
+    .icon-btn:hover {
+      background: var(--accent-a);
+      border-color: var(--accent-a);
+      color: var(--text-on-accent);
+      transform: scale(1.05);
     }
 
     .icon-btn:active {
-      transform: translateY(1px)
+      transform: scale(0.98);
+    }
+
+    @media (max-width: 992px) {
+      .header-nav {
+        display: none;
+      }
+      .luxury-header {
+        width: calc(100% - 24px);
+        top: 12px;
+        padding: 0 8px 0 16px;
+      }
     }
 
     .icon-btn:hover {
@@ -390,20 +574,23 @@
 
     .btn-primary {
       background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-
       color: white;
       padding: 12px 18px;
       border-radius: 999px;
       border: 0;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 25px rgba(var(--accent-a-rgb), 0.15);
       font-weight: 700;
-      transition: all .3s ease;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
       background-size: 200% 100%;
+      animation: ctaPrimaryBeacon 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+      will-change: transform, box-shadow;
     }
 
     .btn-primary:hover {
+      animation: none;
       background-position: right center;
-      transform: scale(1.03);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 15px 35px rgba(var(--accent-a-rgb), 0.25);
     }
 
     body.light .btn-primary {
@@ -413,24 +600,53 @@
 
     .btn-ghost {
       background: transparent;
-      border: 2px solid var(--surface);
+      border: 2px solid var(--border-color);
       color: var(--text);
       padding: 10px 16px;
       border-radius: 999px;
-      transition: all .2s ease;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      animation: ctaGhostBeacon 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+      will-change: border-color, box-shadow;
     }
 
     .btn-ghost:hover {
+      animation: none;
       background: var(--accent-a);
       border-color: var(--accent-a);
-      color: white;
+      color: var(--text-on-accent);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(var(--accent-a-rgb), 0.15);
     }
 
-
     body.light .btn-ghost:hover {
+      animation: none;
       background: var(--surface);
       color: var(--accent-a);
       border-color: var(--surface);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    @keyframes ctaPrimaryBeacon {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 10px 25px rgba(var(--accent-a-rgb), 0.15);
+      }
+      50% {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 15px 35px rgba(var(--accent-a-rgb), 0.25);
+      }
+    }
+
+    @keyframes ctaGhostBeacon {
+      0%, 100% {
+        border-color: var(--border-color);
+        box-shadow: 0 0 0 transparent;
+      }
+      50% {
+        border-color: var(--accent-a);
+        box-shadow: 0 0 15px rgba(var(--accent-a-rgb), 0.15);
+      }
     }
 
     /* --- Who section (New Layout & Styling) --- */
@@ -520,7 +736,7 @@
     /* ---------------- TESTIMONIALS ---------------- */
     #testimonials {
       padding: 100px 0;
-      background: var(--bg);
+      background: transparent;
       overflow: hidden;
     }
 
@@ -738,21 +954,29 @@
       display: flex;
       align-items: center;
       gap: 24px;
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
       padding: 30px;
       border-radius: var(--radius);
       margin-bottom: 24px;
-      border: 1px solid rgba(var(--accent-a-rgb), 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       outline: none;
       position: relative;
       overflow: hidden;
       will-change: transform, opacity, box-shadow;
       transition:
-        transform 0.4s var(--ease),
-        opacity 0.4s var(--ease),
-        box-shadow 0.4s var(--ease),
-        border-color 0.4s var(--ease),
-        background 0.4s var(--ease);
+        transform 0.5s var(--ease),
+        opacity 0.5s var(--ease),
+        box-shadow 0.5s var(--ease),
+        border-color 0.5s var(--ease),
+        background 0.5s var(--ease);
+    }
+
+    body.light #education .education-card {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
 
     #education .education-card::before {
@@ -762,48 +986,46 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(var(--accent-a-rgb), 0.05), transparent);
+      background: radial-gradient(600px circle at 0% 0%, rgba(var(--accent-a-rgb), 0.06), transparent 60%);
       opacity: 0;
-      transition: opacity 0.4s var(--ease);
+      pointer-events: none;
+      transition: opacity 0.5s var(--ease);
     }
 
-    #education .education-content:has(.education-card:hover) .education-card:not(:hover),
-    #education .education-content:has(.education-card:focus-visible) .education-card:not(:focus-visible) {
-      opacity: 0.6;
-      transform: scale(0.99);
-      filter: blur(1px);
+    @media (hover: hover) {
+      #education .education-content:has(.education-card:hover) .education-card:not(:hover),
+      #education .education-content:has(.education-card:focus-visible) .education-card:not(:focus-visible) {
+        opacity: 0.6;
+        transform: scale(0.99);
+        filter: blur(1px);
+      }
     }
 
     #education .education-card:hover,
     #education .education-card:focus-visible {
       opacity: 1;
-      transform: translateY(-12px) scale(1.02);
+      transform: translateY(-6px) scale(1.01);
+      background: rgba(255, 255, 255, 0.03);
       box-shadow:
-        0 25px 50px -12px rgba(0, 0, 0, 0.4),
-        0 0 25px rgba(var(--accent-a-rgb), 0.15);
-      border-color: rgba(var(--accent-a-rgb), 0.3);
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
       filter: blur(0);
       outline: none;
     }
 
-    #education .education-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(var(--accent-a-rgb), 0.1), transparent);
-      opacity: 0;
-      transition: opacity 0.4s var(--ease);
-      z-index: -1;
+    body.light #education .education-content .education-card:hover,
+    body.light #education .education-content .education-card:focus-visible {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 30px rgba(var(--accent-a-rgb), 0.05);
     }
 
-    #education .education-card:hover::before {
+    #education .education-card:hover::before,
+    #education .education-card:focus-visible::before {
       opacity: 1;
-    }
-
-
-    body:not(.light) #education .education-content .education-card:hover,
-    body:not(.light) #education .education-content .education-card:focus-visible {
-      background: linear-gradient(145deg, #323232, #292929);
     }
 
     #education .edu-icon {
@@ -811,37 +1033,53 @@
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: rgba(var(--accent-a-rgb), 0.1);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent-a);
+      color: var(--muted);
       font-size: 24px;
-      transition: all 0.4s var(--ease);
+      transition: transform 0.5s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
+    }
+
+    body.light #education .edu-icon {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.08);
+      color: var(--muted);
     }
 
     .education-card:hover .edu-icon {
-      background: var(--accent-a);
-      color: var(--text-on-accent);
-      transform: rotate(-12deg) scale(1.1);
-      box-shadow: 0 8px 20px rgba(var(--accent-a-rgb), 0.3);
+      transform: scale(1.08);
+      background: rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(var(--accent-a-rgb), 0.25);
+      color: var(--accent-a);
     }
 
     #education .edu-date {
       display: inline-flex;
       align-items: center;
       padding: 4px 14px;
-      background: rgba(var(--accent-a-rgb), 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 20px;
-      color: var(--accent-a);
+      color: var(--muted);
       font-size: 13px;
       font-weight: 600;
       margin-bottom: 8px;
-      transition: background 0.3s var(--ease);
+      transition: color 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
+    }
+
+    body.light #education .edu-date {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: rgba(0, 0, 0, 0.06);
+      color: var(--muted);
     }
 
     .education-card:hover .edu-date {
-      background: rgba(var(--accent-a-rgb), 0.15);
+      color: var(--accent-a);
+      border-color: rgba(var(--accent-a-rgb), 0.2);
+      background: rgba(var(--accent-a-rgb), 0.08);
     }
 
 
@@ -1067,73 +1305,6 @@
       gap: 30px;
     }
 
-    .competency-card {
-      position: relative;
-      background-color: var(--surface);
-      padding: 35px 30px;
-      border-radius: var(--radius, 12px);
-      text-align: center;
-      z-index: 1;
-      overflow: hidden;
-      transition: all 0.35s var(--ease);
-      flex: 1 1 calc(33.333% - 30px);
-      max-width: calc(33.333% - 30px);
-      min-width: 300px;
-    }
-
-    .competency-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(45deg, var(--accent-a), var(--accent-b));
-      z-index: -2;
-      opacity: 0.3;
-      filter: blur(8px);
-      transition: opacity 0.3s ease, filter 0.3s ease;
-    }
-
-    .competency-card::after {
-      content: '';
-      position: absolute;
-      inset: 2px;
-      background-color: var(--surface);
-      border-radius: calc(var(--radius, 12px) - 2px);
-      z-index: -1;
-      transition: background-color var(--trans);
-    }
-
-
-
-    .competencies-grid .competency-card:hover {
-      opacity: 1;
-      transform: scale(1.08) translateY(-10px);
-      z-index: 2;
-    }
-
-    .competencies-grid .competency-card:hover::before {
-      opacity: 0.9;
-      filter: blur(18px);
-    }
-
-    .card-icon {
-      font-size: 36px;
-      color: var(--accent-a);
-      margin-bottom: 15px;
-    }
-
-    .card-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .card-description {
-      font-size: 15px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
     .section-subtitle {
       text-align: center;
       font-size: 18px;
@@ -1161,41 +1332,51 @@
       }
     }
 
-
-
-
     /* --- Competency Cards (Unified Premium Style) --- */
     .competency-card {
       position: relative;
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
       border-radius: var(--radius);
       padding: 35px 30px;
-      border: 1px solid rgba(var(--accent-a-rgb), 0.08);
-      transition: all 0.4s var(--ease);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.5s var(--ease);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       height: 100%;
       z-index: 1;
+      flex: 1 1 calc(33.333% - 30px);
+      max-width: calc(33.333% - 30px);
+      min-width: 300px;
+    }
+
+    body.light .competency-card {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
 
     .competency-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(var(--accent-a-rgb), 0.1), transparent);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(600px circle at 0% 0%, rgba(var(--accent-a-rgb), 0.06), transparent 60%);
       opacity: 0;
-      transition: opacity 0.4s var(--ease);
+      pointer-events: none;
+      transition: opacity 0.5s var(--ease);
       z-index: -1;
     }
 
-    /* Blur-others logic for competencies grid */
     @media (hover: hover) {
-
       .competencies-grid:has(.competency-card:hover) .competency-card:not(:hover),
       .competencies-grid:has(.competency-card:focus-visible) .competency-card:not(:focus-visible) {
-        opacity: 0.5;
-        transform: scale(0.98);
+        opacity: 0.6;
+        transform: scale(0.99);
         filter: blur(1px);
       }
     }
@@ -1203,13 +1384,23 @@
     .competencies-grid .competency-card:hover,
     .competencies-grid .competency-card:focus-visible {
       opacity: 1;
-      transform: translateY(-12px) scale(1.02);
-      filter: blur(0);
-      border-color: rgba(var(--accent-a-rgb), 0.3);
+      transform: translateY(-6px) scale(1.01);
+      background: rgba(255, 255, 255, 0.03);
       box-shadow:
-        0 25px 50px -12px rgba(0, 0, 0, 0.4),
-        0 0 20px rgba(var(--accent-a-rgb), 0.15);
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+      filter: blur(0);
       outline: none;
+    }
+
+    body.light .competencies-grid .competency-card:hover,
+    body.light .competencies-grid .competency-card:focus-visible {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 30px rgba(var(--accent-a-rgb), 0.05);
     }
 
     .competencies-grid .competency-card:hover::before,
@@ -1217,37 +1408,46 @@
       opacity: 1;
     }
 
-    /* Card Icon Standardization */
     .card-icon {
       width: 54px;
       height: 54px;
-      background: rgba(var(--accent-a-rgb), 0.1);
-      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 22px;
-      color: var(--accent-a);
+      color: var(--muted);
       font-size: 24px;
-      transition: all 0.4s var(--ease);
+      transition: transform 0.5s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
+    }
+
+    body.light .card-icon {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.08);
+      color: var(--muted);
     }
 
     .competency-card:hover .card-icon,
     .competency-card:focus-visible .card-icon {
-      background: var(--accent-a);
-      color: var(--text-on-accent);
-      transform: rotate(-12deg) scale(1.1);
-      box-shadow: 0 8px 20px rgba(var(--accent-a-rgb), 0.3);
+      transform: scale(1.08);
+      background: rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(var(--accent-a-rgb), 0.25);
+      color: var(--accent-a);
     }
 
-    /* Dark Mode Overrides (Optional refinement) */
-    body:not(.light) .competency-card {
-      background: rgba(255, 255, 255, 0.03);
+    .card-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
     }
 
-    body.light .competency-card {
-      background: #ffffff;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    .card-description {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
 
@@ -1401,11 +1601,13 @@
       display: flex;
       align-items: flex-start;
       gap: 24px;
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
       padding: 30px;
       border-radius: var(--radius);
       margin-bottom: 24px;
-      border: 1px solid rgba(var(--accent-a-rgb), 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       outline: none;
       position: relative;
       overflow: hidden;
@@ -1413,11 +1615,17 @@
       will-change: transform, opacity, box-shadow;
 
       transition:
-        transform 0.4s var(--ease),
-        opacity 0.4s var(--ease),
-        box-shadow 0.4s var(--ease),
-        border-color 0.4s var(--ease),
-        background 0.4s var(--ease);
+        transform 0.5s var(--ease),
+        opacity 0.5s var(--ease),
+        box-shadow 0.5s var(--ease),
+        border-color 0.5s var(--ease),
+        background 0.5s var(--ease);
+    }
+
+    body.light .experience-card {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
 
     .experience-card::before {
@@ -1427,9 +1635,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(var(--accent-a-rgb), 0.05), transparent);
+      background: radial-gradient(600px circle at 0% 0%, rgba(var(--accent-a-rgb), 0.06), transparent 60%);
       opacity: 0;
-      transition: opacity 0.4s var(--ease);
+      pointer-events: none;
+      transition: opacity 0.5s var(--ease);
     }
 
     @media (hover: hover) {
@@ -1445,13 +1654,23 @@
     .experience-cards .experience-card:hover,
     .experience-cards .experience-card:focus-visible {
       opacity: 1;
-      transform: translateY(-10px) scale(1.02);
+      transform: translateY(-6px) scale(1.01);
+      background: rgba(255, 255, 255, 0.03);
       box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.2),
-        0 0 0 1px rgba(var(--accent-a-rgb), 0.2);
-      border-color: rgba(var(--accent-a-rgb), 0.3);
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
       filter: blur(0);
       outline: none;
+    }
+
+    body.light .experience-cards .experience-card:hover,
+    body.light .experience-cards .experience-card:focus-visible {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 30px rgba(var(--accent-a-rgb), 0.05);
     }
 
     .experience-card:hover::before,
@@ -1459,30 +1678,33 @@
       opacity: 1;
     }
 
-    body:not(.light) #experience .experience-card:hover,
-    body:not(.light) #experience .experience-card:focus-visible {
-      background: linear-gradient(145deg, #323232, #292929);
-    }
-
     .exp-icon {
       flex-shrink: 0;
       width: 54px;
       height: 54px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 22px;
+      color: var(--muted);
+      font-size: 18px;
       margin-top: 5px;
-      box-shadow: 0 10px 20px rgba(var(--accent-a-rgb), 0.3);
-      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+      transition: transform 0.5s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
+    }
+
+    body.light .exp-icon {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.08);
+      color: var(--muted);
     }
 
     .experience-card:hover .exp-icon {
-      transform: rotate(12deg) scale(1.1);
-      box-shadow: 0 15px 30px rgba(var(--accent-a-rgb), 0.5);
+      transform: scale(1.08);
+      background: rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(var(--accent-a-rgb), 0.25);
+      color: var(--accent-a);
     }
 
     .exp-date {
@@ -1492,12 +1714,26 @@
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: var(--accent-a);
+      color: var(--muted);
       font-weight: 700;
-      background: rgba(var(--accent-a-rgb), 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 4px 12px;
       border-radius: 20px;
       margin-bottom: 8px;
+      transition: color 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
+    }
+
+    body.light .exp-date {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: rgba(0, 0, 0, 0.06);
+      color: var(--muted);
+    }
+
+    .experience-card:hover .exp-date {
+      color: var(--accent-a);
+      border-color: rgba(var(--accent-a-rgb), 0.2);
+      background: rgba(var(--accent-a-rgb), 0.08);
     }
 
     .pulse-dot {
@@ -1730,7 +1966,7 @@
 
     section#projects {
       padding: 100px 20px;
-      background-color: var(--bg);
+      background-color: transparent;
       text-align: center;
       position: relative;
       overflow-x: hidden;
@@ -1752,23 +1988,30 @@
 
     .project-card {
       position: relative;
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
       border-radius: var(--radius);
       padding: 30px;
       overflow: hidden;
-      border: 1px solid rgba(var(--accent-a-rgb), 0.05);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       will-change: transform, opacity, box-shadow;
       transition:
-        transform 0.4s var(--ease),
-        opacity 0.4s var(--ease),
-        box-shadow 0.4s var(--ease),
-        filter 0.4s var(--ease),
-        border-color 0.4s var(--ease),
-        background 0.4s var(--ease);
+        transform 0.5s var(--ease),
+        opacity 0.5s var(--ease),
+        box-shadow 0.5s var(--ease),
+        filter 0.5s var(--ease),
+        border-color 0.5s var(--ease),
+        background 0.5s var(--ease);
       min-height: 400px;
       display: flex;
       flex-direction: column;
+    }
+
+    body.light .project-card {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
 
     .project-card::before {
@@ -1778,15 +2021,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(var(--accent-a-rgb), 0.05), transparent);
+      background: radial-gradient(600px circle at 0% 0%, rgba(var(--accent-a-rgb), 0.06), transparent 60%);
       opacity: 0;
-      transition: opacity 0.4s var(--ease);
+      transition: opacity 0.5s var(--ease);
       pointer-events: none;
       z-index: 0;
     }
 
     @media (hover: hover) {
-
       .projects-grid:has(.project-card:hover) .project-card:not(:hover),
       .projects-grid:has(.project-card:focus-visible) .project-card:not(:focus-visible) {
         opacity: 0.6;
@@ -1798,21 +2040,28 @@
     .projects-grid .project-card:hover,
     .projects-grid .project-card:focus-visible {
       opacity: 1;
-      transform: translateY(-10px) scale(1.02);
+      transform: translateY(-6px) scale(1.01);
+      background: rgba(255, 255, 255, 0.03);
       box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(var(--accent-a-rgb), 0.2);
-      border-color: rgba(var(--accent-a-rgb), 0.3);
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
       filter: blur(0);
       outline: none;
     }
 
-    .project-card:hover::before {
-      opacity: 1;
+    body.light .projects-grid .project-card:hover,
+    body.light .projects-grid .project-card:focus-visible {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 30px rgba(var(--accent-a-rgb), 0.05);
     }
 
-    body:not(.light) .project-card:hover {
-      background: linear-gradient(145deg, #323232, #292929);
+    .project-card:hover::before,
+    .project-card:focus-visible::before {
+      opacity: 1;
     }
 
     .project-inner {
@@ -1994,7 +2243,16 @@
       border-radius: 50px;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .view-all-btn i {
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: transform;
+      animation: ctaArrowBeacon 1.6s cubic-bezier(0.25, 1, 0.5, 1) infinite;
     }
 
     .social-icon {
@@ -2042,8 +2300,13 @@
     .view-all-btn:hover {
       background-color: var(--accent-a);
       color: var(--text-on-accent);
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(var(--accent-a-rgb), 0.4);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 10px 25px rgba(var(--accent-a-rgb), 0.4);
+    }
+
+    .view-all-btn:hover i {
+      animation: none;
+      transform: translateX(6px);
     }
 
     .scroll-top-btn {
@@ -2155,21 +2418,29 @@
     }
 
     .achievement-card {
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
       border-radius: var(--radius);
       padding: 0;
       margin-bottom: 10px;
-      border: 1px solid rgba(var(--accent-a-rgb), 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       outline: none;
       position: relative;
       overflow: hidden;
       will-change: transform, opacity, box-shadow;
       transition:
-        transform 0.4s var(--ease),
-        opacity 0.4s var(--ease),
-        box-shadow 0.4s var(--ease),
-        border-color 0.4s var(--ease),
-        background 0.4s var(--ease);
+        transform 0.5s var(--ease),
+        opacity 0.5s var(--ease),
+        box-shadow 0.5s var(--ease),
+        border-color 0.5s var(--ease),
+        background 0.5s var(--ease);
+    }
+
+    body.light .achievement-card {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
 
     .achievement-card::before {
@@ -2179,13 +2450,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(var(--accent-a-rgb), 0.05), transparent);
+      background: radial-gradient(600px circle at 0% 0%, rgba(var(--accent-a-rgb), 0.06), transparent 60%);
       opacity: 0;
-      transition: opacity 0.4s var(--ease);
+      pointer-events: none;
+      transition: opacity 0.5s var(--ease);
     }
 
     @media (hover: hover) {
-
       .achievements-list:has(.achievement-card:hover) .achievement-card:not(:hover),
       .achievements-list:has(.achievement-card:focus-visible) .achievement-card:not(:focus-visible) {
         opacity: 0.6;
@@ -2197,22 +2468,28 @@
     .achievements-list .achievement-card:hover,
     .achievements-list .achievement-card:focus-visible {
       opacity: 1;
-      transform: translateY(-10px) scale(1.02);
+      transform: translateY(-6px) scale(1.01);
+      background: rgba(255, 255, 255, 0.03);
       box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.2),
-        0 0 0 1px rgba(var(--accent-a-rgb), 0.2);
-      border-color: rgba(var(--accent-a-rgb), 0.3);
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
       filter: blur(0);
       outline: none;
     }
 
-    .achievement-card:hover::before {
-      opacity: 1;
+    body.light .achievements-list .achievement-card:hover,
+    body.light .achievements-list .achievement-card:focus-visible {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 30px rgba(var(--accent-a-rgb), 0.05);
     }
 
-    body:not(.light) .achievement-card:hover,
-    body:not(.light) .achievement-card:focus-visible {
-      background: linear-gradient(145deg, #323232, #292929);
+    .achievement-card:hover::before,
+    .achievement-card:focus-visible::before {
+      opacity: 1;
     }
 
 
@@ -2624,17 +2901,237 @@
       transition: fill 0.4s ease;
     }
 
-    .main-footer {
-      padding: 25px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 15px;
-      background-color: var(--background);
+    /* ---------------- Luxury Footer (Quiet Luxury 3-Column Layout) ---------------- */
+    .luxury-footer {
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 80px 60px 40px 60px;
+      margin-top: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+      position: relative;
+      font-family: 'Poppins', sans-serif;
     }
 
-    .main-footer i {
+    body.light .luxury-footer {
+      background: rgba(255, 255, 255, 0.6);
+      border-top-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .footer-content {
+      width: 100%;
+      max-width: 1300px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.5fr;
+      gap: 60px;
+      margin-bottom: 80px;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-overline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .overline-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-a);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-a);
+    }
+
+    .overline-icon {
       color: var(--accent-a);
-      margin: 0 5px;
+      font-size: 14px;
+    }
+
+    .overline-text {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--accent-a);
+      text-transform: uppercase;
+    }
+
+    .footer-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 20px 0;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-bio,
+    .footer-connect-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin: 0;
+      max-width: 450px;
+    }
+
+    .footer-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .footer-nav-list button {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      padding: 0;
+      text-align: left;
+    }
+
+    .footer-nav-list button:hover {
+      color: var(--accent-a);
+      transform: translateX(4px);
+    }
+
+    .footer-connect-col .footer-connect-text {
+      margin-bottom: 28px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-socials a {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 18px;
+      text-decoration: none;
+      transition: all 0.3s var(--ease);
+    }
+
+    body.light .footer-socials a {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .footer-socials a:hover {
+      color: var(--text-on-accent);
+      background: var(--accent-a);
+      border-color: var(--accent-a);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(var(--accent-a-rgb), 0.3);
+    }
+
+    .footer-bottom {
+      width: 100%;
+      max-width: 1300px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    body.light .footer-bottom {
+      border-top-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .footer-copyright {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .footer-bottom-right {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .footer-back-to-top {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s var(--ease);
+    }
+
+    body.light .footer-back-to-top {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: var(--text);
+    }
+
+    .footer-back-to-top:hover {
+      background: var(--accent-a);
+      border-color: var(--accent-a);
+      color: var(--text-on-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(var(--accent-a-rgb), 0.3);
+    }
+
+    @media (max-width: 992px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .luxury-footer {
+        padding: 60px 30px 30px 30px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+      }
+      .footer-bottom-right {
+        justify-content: center;
+        gap: 20px;
+      }
     }
 
 
@@ -2702,7 +3199,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      background: var(--bg);
+      background: transparent;
       padding: 40px 100px 40px 240px;
     }
 
@@ -2719,9 +3216,10 @@
       font-size: 18px !important;
       line-height: 1.6;
       color: var(--muted);
-      max-width: 600px;
+      max-width: 800px;
       margin-top: 6px;
       margin-bottom: 40px;
+      text-align: left;
     }
 
     .understand-people {
@@ -2854,7 +3352,7 @@
     /* ---------------- SERVICES ---------------- */
     #services {
       padding: 100px 40px;
-      background: var(--bg);
+      background: transparent;
     }
 
     .services-grid {
@@ -2866,12 +3364,14 @@
     }
 
     .service-card {
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
       border-radius: var(--radius);
       padding: 40px;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       transition: all 0.5s var(--ease);
       cursor: pointer;
       display: flex;
@@ -2882,58 +3382,87 @@
       will-change: transform, border-color, box-shadow;
     }
 
-    .service-card:focus-visible {
-      border-color: var(--card-clr, var(--accent-a));
-      box-shadow: 0 0 0 4px rgba(var(--card-clr-rgb, var(--accent-a-rgb)), 0.2);
-      transform: translateY(-5px);
+    body.light .service-card {
+      background: rgba(255, 255, 255, 0.6);
+      border-color: rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
 
     .service-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(var(--accent-a-rgb), 0.1), rgba(var(--accent-b-rgb), 0.1));
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(600px circle at 0% 0%, rgba(var(--accent-a-rgb), 0.06), transparent 60%);
       opacity: 0;
+      pointer-events: none;
       transition: opacity 0.5s var(--ease);
       z-index: -1;
     }
 
-    .service-card:hover {
-      transform: translateY(-10px);
-      border-color: rgba(var(--card-clr-rgb, var(--accent-a-rgb)), 0.4);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--card-clr-rgb, var(--accent-a-rgb)), 0.1);
+    @media (hover: hover) {
+      .services-grid:has(.service-card:hover) .service-card:not(:hover),
+      .services-grid:has(.service-card:focus-visible) .service-card:not(:focus-visible) {
+        filter: blur(2px) brightness(0.8);
+        transform: scale(0.98);
+        opacity: 0.6;
+        pointer-events: none;
+      }
     }
 
-    .service-card:hover::before {
+    .service-card:hover,
+    .service-card:focus-visible {
+      transform: translateY(-6px) scale(1.01);
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(var(--accent-a-rgb), 0.08);
+      outline: none;
+    }
+
+    body.light .services-grid .service-card:hover,
+    body.light .services-grid .service-card:focus-visible {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 30px rgba(var(--accent-a-rgb), 0.05);
+    }
+
+    .service-card:hover::before,
+    .service-card:focus-visible::before {
       opacity: 1;
-    }
-
-    /* Blur others interaction */
-    .services-grid:has(.service-card:hover) .service-card:not(:hover) {
-      filter: blur(4px) brightness(0.7);
-      transform: scale(0.96);
-      opacity: 0.5;
-      pointer-events: none;
     }
 
     .service-icon {
       width: 64px;
       height: 64px;
-      background: rgba(var(--card-clr-rgb, var(--accent-a-rgb)), 0.1);
-      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 28px;
-      color: var(--card-clr, var(--accent-a));
-      transition: all 0.5s var(--ease);
+      color: var(--muted);
+      transition: transform 0.5s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
     }
 
-    .service-card:hover .service-icon {
-      background: var(--card-clr, var(--accent-a));
-      color: white;
-      transform: scale(1.1) rotate(-5deg);
-      box-shadow: 0 10px 20px rgba(var(--card-clr-rgb, var(--accent-a-rgb)), 0.3);
+    body.light .service-icon {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.08);
+      color: var(--muted);
+    }
+
+    .service-card:hover .service-icon,
+    .service-card:focus-visible .service-icon {
+      transform: scale(1.08);
+      background: rgba(var(--accent-a-rgb), 0.08);
+      border-color: rgba(var(--accent-a-rgb), 0.25);
+      color: var(--accent-a);
     }
 
     .service-info h3 {
@@ -2974,50 +3503,38 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.3s var(--ease);
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .service-cta i {
-      transition: transform 0.3s var(--ease);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: transform;
+      animation: ctaArrowBeacon 1.6s cubic-bezier(0.25, 1, 0.5, 1) infinite;
     }
 
     .service-card:hover .service-cta {
       color: var(--text);
+      transform: translateX(4px);
     }
 
     .service-card:hover .service-cta i {
-      transform: translateX(5px);
+      animation: none;
+      transform: translateX(6px);
     }
 
-    /* --- Category Colors --- */
-    .service-card[data-service="dashboard-bi"] {
-      --card-clr: #00d2ff;
-      --card-clr-rgb: 0, 210, 255;
+    @keyframes ctaArrowBeacon {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(5px);
+      }
     }
 
-    .service-card[data-service="sql-expert"] {
-      --card-clr: #7f7fd5;
-      --card-clr-rgb: 127, 127, 213;
-    }
-
-    .service-card[data-service="excel-solutions"] {
-      --card-clr: #00b09b;
-      --card-clr-rgb: 0, 176, 155;
-    }
-
-    .service-card[data-service="media-buying"] {
-      --card-clr: #f7b733;
-      --card-clr-rgb: 247, 183, 51;
-    }
-
-    .service-card[data-service="social-media"] {
-      --card-clr: #ff5f6d;
-      --card-clr-rgb: 255, 95, 109;
-    }
-
-    .service-card[data-service="crm-data"] {
-      --card-clr: #a18cd1;
-      --card-clr-rgb: 161, 140, 209;
+    /* --- Unified accent treatment: no rainbow per-card --- */
+    .service-card {
+      --card-clr: var(--accent-a);
+      --card-clr-rgb: var(--accent-a-rgb);
     }
 
     /* ---------------- SERVICE MODAL ---------------- */
@@ -3848,9 +4365,8 @@
         font-size: 22px;
       }
 
-      .main-footer {
-        font-size: 14px;
-        padding: 18px 10px;
+      .luxury-footer {
+        padding: 40px 15px 15px 15px;
       }
     }
 
@@ -4291,19 +4807,147 @@
         animation-delay: 1.5s;
       }
     }
+
+    /* ---------------- LUXURY PAGE LOADER ---------------- */
+    #luxury-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background-color: #0e0e10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.8s cubic-bezier(0.8, 0, 0.2, 1), visibility 0.8s;
+    }
+
+    body.light #luxury-loader {
+      background-color: #f2f3f7;
+    }
+
+    #luxury-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-brand {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 8px;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: loaderBrandIntro 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+      background: linear-gradient(135deg, var(--text) 0%, var(--muted) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .loader-job-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent-a);
+      margin-bottom: 35px;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: loaderBrandIntro 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) 0.2s forwards;
+    }
+
+    .loader-line-container {
+      width: 240px;
+      height: 1px;
+      background: rgba(var(--accent-a-rgb), 0.15);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .loader-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, transparent, var(--accent-a), var(--accent-b), transparent);
+      animation: loaderLineAnim 1.4s cubic-bezier(0.8, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes loaderBrandIntro {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes loaderLineAnim {
+      0% {
+        left: -100%;
+        width: 100%;
+      }
+      100% {
+        left: 100%;
+        width: 100%;
+      }
+    }
+
+    /* ---------------- Arabic Typography ---------------- */
+    [lang="ar"] {
+      font-family: 'Cairo', 'Poppins', sans-serif;
+    }
+
+    /* Fixed Button Visibility */
+    .hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.6s var(--ease);
+    }
   </style>
 </head>
 
 <body>
-  <div class="top-left" aria-hidden="false">
-    <button id="menuBtn" class="icon-btn" aria-label="Open menu">☰</button>
+  <!-- LUXURY PAGE LOADER -->
+  <div id="luxury-loader" aria-busy="true" aria-label="Loading site">
+    <div class="loader-brand" data-i18n="hero_name">Amr Mousa</div>
+    <div class="loader-job-title" data-i18n="hero_job">DATA ANALYST & MARKETING STRATEGIST</div>
+    <div class="loader-line-container">
+      <div class="loader-line"></div>
+    </div>
   </div>
 
+  <header class="luxury-header" aria-label="Site Header">
+    <div class="header-left">
+      <div class="header-brand" role="button" tabindex="0" onclick="goToSection('#hero')">
+        <span class="brand-dot"></span>
+        <span class="brand-text" data-i18n="hero_name">Amr Mousa</span>
+      </div>
+    </div>
 
-  <div class="top-right" aria-hidden="false">
-    <button id="themeBtn" class="icon-btn" aria-label="Toggle theme">🌙</button>
-    <button id="muteBtn" class="icon-btn" aria-label="Mute sounds">🔊</button>
-  </div>
+    <nav class="header-nav" aria-label="Desktop Navigation">
+      <button class="nav-link active" data-section="#hero" data-i18n="nav_home" onclick="goToSection('#hero')">Home</button>
+      <button class="nav-link" data-section="#who" data-i18n="nav_about" onclick="goToSection('#who')">About</button>
+      <button class="nav-link" data-section="#education" data-i18n="nav_resume" onclick="goToSection('#education')">Resume</button>
+      <button class="nav-link" data-section="#services" data-i18n="nav_services" onclick="goToSection('#services')">Services</button>
+      <button class="nav-link" data-section="#projects" data-i18n="nav_projects" onclick="goToSection('#projects')">Projects</button>
+      <button class="nav-link" data-section="#achievements" data-i18n="nav_achievements" onclick="goToSection('#achievements')">Achievements</button>
+      <button class="nav-link" data-section="#contact" data-i18n="nav_contact" onclick="goToSection('#contact')">Contact</button>
+    </nav>
+
+    <div class="header-controls">
+      <button id="langBtn" class="icon-btn lang-toggle-btn" aria-label="Toggle language">AR</button>
+      <button id="themeBtn" class="icon-btn" aria-label="Toggle theme">🌙</button>
+      <button id="muteBtn" class="icon-btn" aria-label="Mute sounds">🔊</button>
+      <button id="menuBtn" class="icon-btn menu-toggle-btn" aria-label="Open menu">☰</button>
+    </div>
+  </header>
 
   <!-- drawer (left) -->
   <nav id="drawer" class="drawer collapsed" aria-label="Site sections" aria-hidden="true">
@@ -4314,37 +4958,37 @@
     <div class="menu menu-centered" role="menu" aria-orientation="vertical">
       <div class="menu-item" data-target="#hero" role="menuitem" tabindex="0">
         <div class="icon-box"><i class="fa-solid fa-house-chimney"></i></div>
-        <div class="label">Home</div>
+        <div class="label" data-i18n="nav_home">Home</div>
       </div>
 
       <div class="menu-item" data-target="#who" role="menuitem" tabindex="0">
         <div class="icon-box"><i class="fa-solid fa-user-tie"></i></div>
-        <div class="label">About</div>
+        <div class="label" data-i18n="nav_about">About</div>
       </div>
 
       <div class="menu-item" data-target="#education" role="menuitem" tabindex="0">
         <div class="icon-box"><i class="fa-solid fa-user-graduate"></i></div>
-        <div class="label">Resume</div>
+        <div class="label" data-i18n="nav_resume">Resume</div>
       </div>
 
       <div class="menu-item" data-target="#services" role="menuitem" tabindex="0">
         <div class="icon-box"><i class="fa-solid fa-gears"></i></div>
-        <div class="label">Services</div>
+        <div class="label" data-i18n="nav_services">Services</div>
       </div>
 
       <div class="menu-item" data-target="#projects" role="menuitem" tabindex="0">
         <div class="icon-box"><i class="fa-solid fa-briefcase"></i></div>
-        <div class="label">Projects</div>
+        <div class="label" data-i18n="nav_projects">Projects</div>
       </div>
 
       <div class="menu-item" data-target="#achievements" role="menuitem" tabindex="0">
         <div class="icon-box"><i class="fa-solid fa-trophy"></i></div>
-        <div class="label">Achievements</div>
+        <div class="label" data-i18n="nav_achievements">Achievements</div>
       </div>
 
       <div class="menu-item" data-target="#contact" role="menuitem" tabindex="0">
         <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
-        <div class="label">Contact</div>
+        <div class="label" data-i18n="nav_contact">Contact</div>
       </div>
 
     </div>
@@ -4361,13 +5005,13 @@
 
       <div class="split-left">
         <div class="bg-pattern"></div>
-        <h1 class="logo-name" style="position: relative; z-index: 20;">Amr Mousa</h1>
+        <h1 class="logo-name" style="position: relative; z-index: 20;" data-i18n="hero_name">Amr Mousa</h1>
 
         <div class="idea-text">
           <p>
-            <span>Content builds relationships</span>
-            <span>Relationships are built on trust</span>
-            <span>Trust drives revenue</span>
+            <span data-i18n="hero_quote1">Content builds relationships</span>
+            <span data-i18n="hero_quote2">Relationships are built on trust</span>
+            <span data-i18n="hero_quote3">Trust drives revenue</span>
           </p>
         </div>
 
@@ -4389,15 +5033,15 @@
       <div class="split-right">
         <div class="hero-text-content " style="animation-delay:0.2s">
 
-          <h2 id="hero-title" class="hero-main-name">Amr Mousa</h2>
-          <div class="sub-heading">Data & Marketing Analyst</div>
-          <p class="hero-skills-text">SQL • Power BI • Python • Media Buying • Content Strategy</p>
+          <h2 id="hero-title" class="hero-main-name" data-i18n="hero_name">Amr Mousa</h2>
+          <div class="sub-heading" data-i18n="hero_job">Data & Marketing Analyst</div>
+          <p class="hero-skills-text" data-i18n="hero_skills">SQL • Power BI • Python • Media Buying • Content Strategy</p>
 
-          <p class="hero-intro-text">I use data to understand systems, and marketing to <span
+          <p class="hero-intro-text" data-i18n="hero_description">I use data to understand systems, and marketing to <span
               class="understand-people">understand people.</span></p>
           <div class="cta">
-            <button class="btn-primary" onclick="window.open('files/Amr hazem.pdf')">Download CV</button>
-            <button class="btn-ghost" onclick="goToSection('#contact')">Contact</button>
+            <button class="btn-primary" onclick="window.open('files/Amr hazem.pdf')" data-i18n="cta_resume">Download CV</button>
+            <button class="btn-ghost" onclick="goToSection('#contact')" data-i18n="cta_contact">Contact</button>
           </div>
         </div>
       </div>
@@ -4612,16 +5256,16 @@
 
           <div class="who-grid">
             <div class="who-content anim-child" style="transition-delay: 0.2s;">
-              <h2 id="who-title">Who I am</h2>
-              <p>I translate complex data into clear, actionable insights that drive smarter decision-making.</p>
-              <p>My journey began in analytics and naturally evolved into a deep interest in human
+              <h2 id="who-title" data-i18n="who_title">Who I am</h2>
+              <p data-i18n="who_p1">I translate complex data into clear, actionable insights that drive smarter decision-making.</p>
+              <p data-i18n="who_p2">My journey began in analytics and naturally evolved into a deep interest in human
                 behavior—understanding not just the <em>what</em> of data, but the <em>why</em> behind every
                 interaction.</p>
-              <p>I bridge the gap between technical performance and the human journey, turning patterns and conversions
+              <p data-i18n="who_p3">I bridge the gap between technical performance and the human journey, turning patterns and conversions
                 into a cohesive strategy.</p>
-              <p>I believe the most powerful solutions emerge at the intersection of data, strategy, and human
+              <p data-i18n="who_p4">I believe the most powerful solutions emerge at the intersection of data, strategy, and human
                 understanding.</p>
-              <p>When faced with complexity, I focus on finding direction through structure, patterns, and purposeful
+              <p data-i18n="who_p5">When faced with complexity, I focus on finding direction through structure, patterns, and purposeful
                 insight.</p>
             </div>
             <div class="who-illustration anim-child" style="transition-delay: 0.3s;" aria-hidden="true">
@@ -4772,7 +5416,7 @@
         <div class="education-grid">
 
           <div>
-            <h2 id="education-title" class="section-title left-aligned anim-child" style="transition-delay: 0.1s;">
+            <h2 id="education-title" class="section-title left-aligned anim-child" style="transition-delay: 0.1s;" data-i18n="edu_title">
               Education</h2>
 
             <div class="education-content">
@@ -4783,8 +5427,8 @@
                   </div>
                   <div class="edu-info">
                     <span class="edu-date">2015 - 2018</span>
-                    <h4 class="edu-title">Higher Secondary Education</h4>
-                    <p class="edu-location">Abou Bakr El Seddik School</p>
+                    <h4 class="edu-title" data-i18n="edu_hs_title">Higher Secondary Education</h4>
+                    <p class="edu-location" data-i18n="edu_hs_loc">Abou Bakr El Seddik School</p>
                   </div>
                 </div>
               </div>
@@ -4796,8 +5440,8 @@
                   </div>
                   <div class="edu-info">
                     <span class="edu-date">2018 - 2023</span>
-                    <h4 class="edu-title">Bachelor of Chemical Engineering</h4>
-                    <p class="edu-location">Higher Institute of Engineering and Technology in New Damietta</p>
+                    <h4 class="edu-title" data-i18n="edu_bach_title">Bachelor of Chemical Engineering</h4>
+                    <p class="edu-location" data-i18n="edu_bach_loc">Higher Institute of Engineering and Technology in New Damietta</p>
                   </div>
                 </div>
               </div>
@@ -5664,39 +6308,39 @@
       </div>
       <div class="section-anim-container">
         <div class="container competencies-container">
-          <h2 id="competencies-title" class="section-title">Core Skills</h2>
-          <p class="section-subtitle anim-child" style="transition-delay: 0.1s;">Beyond tools and platforms, I
+          <h2 id="competencies-title" class="section-title" data-i18n="comp_title">Core Skills</h2>
+          <p class="section-subtitle anim-child" style="transition-delay: 0.1s;" data-i18n="comp_sub">Beyond tools and platforms, I
             combine analytics, marketing, and strategic thinking to better understand systems, audiences, and growth
             opportunities.</p>
           <div class="competencies-grid">
             <div class="competency-card anim-child" tabindex="0" style="transition-delay: 0.2s;">
               <div class="card-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
-              <h3 class="card-title">Data Analysis</h3>
-              <p class="card-description">Turning raw data into meaningful insights by identifying patterns,
+              <h3 class="card-title" data-i18n="comp_da_title">Data Analysis</h3>
+              <p class="card-description" data-i18n="comp_da_desc">Turning raw data into meaningful insights by identifying patterns,
                 simplifying complexity, and supporting smarter decision-making.</p>
             </div>
             <div class="competency-card anim-child" tabindex="0" style="transition-delay: 0.3s;">
               <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
-              <h3 class="card-title">Data Visualization</h3>
-              <p class="card-description">Presenting data through clear and impactful visuals that make insights
+              <h3 class="card-title" data-i18n="comp_dv_title">Data Visualization</h3>
+              <p class="card-description" data-i18n="comp_dv_desc">Presenting data through clear and impactful visuals that make insights
                 easier to explore, understand, and communicate.</p>
             </div>
             <div class="competency-card anim-child" tabindex="0" style="transition-delay: 0.4s;">
               <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
-              <h3 class="card-title">Media Buying</h3>
-              <p class="card-description">Planning, managing, and optimizing paid campaigns with a focus on
+              <h3 class="card-title" data-i18n="comp_mb_title">Media Buying</h3>
+              <p class="card-description" data-i18n="comp_mb_desc">Planning, managing, and optimizing paid campaigns with a focus on
                 performance, audience targeting, and conversion outcomes.</p>
             </div>
             <div class="competency-card anim-child" tabindex="0" style="transition-delay: 0.5s;">
               <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
-              <h3 class="card-title">Content Strategy</h3>
-              <p class="card-description">Developing content strategies that align with audience behavior,
+              <h3 class="card-title" data-i18n="comp_cs_title">Content Strategy</h3>
+              <p class="card-description" data-i18n="comp_cs_desc">Developing content strategies that align with audience behavior,
                 engagement goals, and brand positioning.</p>
             </div>
             <div class="competency-card anim-child" tabindex="0" style="transition-delay: 0.6s;">
               <div class="card-icon"><i class="fa-solid fa-share-nodes"></i></div>
-              <h3 class="card-title">Social Media Marketing</h3>
-              <p class="card-description">Managing social media presence through audience-focused content, platform
+              <h3 class="card-title" data-i18n="comp_sm_title">Social Media Marketing</h3>
+              <p class="card-description" data-i18n="comp_sm_desc">Managing social media presence through audience-focused content, platform
                 strategy, and consistent brand communication.</p>
             </div>
           </div>
@@ -5902,42 +6546,40 @@
                 <rect x="23" y="537" width="520" height="8" rx="4" fill="var(--accent-a)" />
               </svg>
               <!-- Floating Achievement Badges -->
-              <div class="badges-wrapper">
-                <div class="exp-badge badge-1">
-                  <span>+250%</span>
-                  ROI Growth
+                <div class="badges-wrapper">
+                  <div class="exp-badge badge-1">
+                    <span>+250%</span>
+                    <span data-i18n="exp_badge_roi">ROI Growth</span>
+                  </div>
+                  <div class="exp-badge badge-2">
+                    <span data-i18n="exp_badge_insights">Strategic Data Insights</span>
+                  </div>
+                  <div class="exp-badge badge-3">
+                    <span data-i18n="exp_badge_analysis">Marketing & Analysis</span>
+                  </div>
                 </div>
-                <div class="exp-badge badge-2">
-                  <span>Strategic</span>
-                  Data Insights
-                </div>
-                <div class="exp-badge badge-3">
-                  <span>Marketing</span>
-                  & Analysis
-                </div>
-              </div>
             </div>
           </div>
 
           <div class="experience-content-wrapper">
-            <h2 id="experience-title" class="section-title anim-child" style="transition-delay: 0.2s;">Experience
+            <h2 id="experience-title" class="section-title anim-child" style="transition-delay: 0.2s;" data-i18n="nav_experience">Experience
             </h2>
             <div class="experience-cards">
               <div class="anim-child" style="transition-delay: 0.1s;">
                 <div class="experience-card" tabindex="0">
                   <div class="exp-icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div>
                   <div class="exp-info">
-                    <span class="exp-date">Feb 2026 – present <span class="pulse-dot"></span></span>
-                    <h4 class="exp-title"> Internship Data Analyst </h4>
-                    <p class="exp-company">National Telecommunication Institute - NTI </p>
+                    <span class="exp-date" data-i18n="exp_intern_date">Feb 2026 – present <span class="pulse-dot"></span></span>
+                    <h4 class="exp-title" data-i18n="exp_intern_title"> Internship Data Analyst </h4>
+                    <p class="exp-company" data-i18n="exp_intern_company">National Telecommunication Institute - NTI </p>
                     <ul class="exp-bullets">
-                      <li>Completed a 120-hour intensive internship program focused on data-driven business
+                      <li data-i18n="exp_intern_bullet1">Completed a 120-hour intensive internship program focused on data-driven business
                         intelligence and advanced analytical methodologies.</li>
-                      <li>Successfully delivered 3+ end-to-end analytical projects, utilizing Excel, Power BI, Python,
+                      <li data-i18n="exp_intern_bullet2">Successfully delivered 3+ end-to-end analytical projects, utilizing Excel, Power BI, Python,
                         and SQL to transform raw data into strategic insights.</li>
-                      <li>Collaborated within a professional team to refine analytical models and presented
+                      <li data-i18n="exp_intern_bullet3">Collaborated within a professional team to refine analytical models and presented
                         high-impact findings through multiple technical presentations.</li>
-                      <li>Demonstrated a strong balance between technical analysis and business logic, providing
+                      <li data-i18n="exp_intern_bullet4">Demonstrated a strong balance between technical analysis and business logic, providing
                         meaningful recommendations for data-supported decision making.</li>
                     </ul>
                   </div>
@@ -5948,17 +6590,17 @@
                 <div class="experience-card" tabindex="0">
                   <div class="exp-icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div>
                   <div class="exp-info">
-                    <span class="exp-date">Jan 2026 – Present <span class="pulse-dot"></span></span>
-                    <h4 class="exp-title">Media Buyer | Content Developer </h4>
-                    <p class="exp-company">So Care</p>
+                    <span class="exp-date" data-i18n="exp_media_date">Jan 2026 – Present <span class="pulse-dot"></span></span>
+                    <h4 class="exp-title" data-i18n="exp_media_title">Media Buyer | Content Developer </h4>
+                    <p class="exp-company" data-i18n="exp_media_company">So Care</p>
                     <ul class="exp-bullets">
-                      <li>Orchestrated and optimized multiple high-conversion performance marketing campaigns,
+                      <li data-i18n="exp_media_bullet1">Orchestrated and optimized multiple high-conversion performance marketing campaigns,
                         achieving a remarkable +250% increase in total revenue.</li>
-                      <li>Engineered a comprehensive content strategy, resulting in the production of 30+ custom
+                      <li data-i18n="exp_media_bullet2">Engineered a comprehensive content strategy, resulting in the production of 30+ custom
                         designs and creative reel concepts tailored for maximum engagement.</li>
-                      <li>Bridged the gap between media buying and creative execution by developing strategic content
+                      <li data-i18n="exp_media_bullet3">Bridged the gap between media buying and creative execution by developing strategic content
                         that directly aligns with campaign performance goals.</li>
-                      <li>Currently spearheading the strategic planning and asset preparation for an upcoming
+                      <li data-i18n="exp_media_bullet4">Currently spearheading the strategic planning and asset preparation for an upcoming
                         large-scale website launch campaign to drive digital scale.</li>
                     </ul>
                   </div>
@@ -5969,17 +6611,17 @@
                 <div class="experience-card" tabindex="0">
                   <div class="exp-icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div>
                   <div class="exp-info">
-                    <span class="exp-date">Jul 2025 – Dec 2025 </span>
-                    <h4 class="exp-title">Internship Digital marketing </h4>
-                    <p class="exp-company"> Digital Egypt Pioneers Initiative - DEPI </p>
+                    <span class="exp-date" data-i18n="exp_depi_date">Jul 2025 – Dec 2025 </span>
+                    <h4 class="exp-title" data-i18n="exp_depi_title">Internship Digital marketing </h4>
+                    <p class="exp-company" data-i18n="exp_depi_company"> Digital Egypt Pioneers Initiative - DEPI </p>
                     <ul class="exp-bullets">
-                      <li>Completed a 400-hour intensive digital marketing program, specializing in advanced social
+                      <li data-i18n="exp_depi_bullet1">Completed a 400-hour intensive digital marketing program, specializing in advanced social
                         media marketing and data-driven strategy.</li>
-                      <li>Developed comprehensive SOSTAC® marketing plans and content strategies for multiple brands
+                      <li data-i18n="exp_depi_bullet2">Developed comprehensive SOSTAC® marketing plans and content strategies for multiple brands
                         to drive brand awareness and market penetration.</li>
-                      <li>Executed multi-platform media buying strategies, including audience persona mapping and
+                      <li data-i18n="exp_depi_bullet3">Executed multi-platform media buying strategies, including audience persona mapping and
                         campaign management across Meta, TikTok, LinkedIn, Snapchat, and X.</li>
-                      <li>Implemented SEO best practices and spearheaded a strategic marketing project for the
+                      <li data-i18n="exp_depi_bullet4">Implemented SEO best practices and spearheaded a strategic marketing project for the
                         hardware sector, focusing on integrated sales growth.</li>
                     </ul>
                   </div>
@@ -5990,17 +6632,17 @@
                 <div class="experience-card" tabindex="0">
                   <div class="exp-icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div>
                   <div class="exp-info">
-                    <span class="exp-date">Jan 2025 – May 2025</span>
-                    <h4 class="exp-title">Data Analyst – Financial & Administrative Data (Freelance)</h4>
-                    <p class="exp-company">Oxygen Gym</p>
+                    <span class="exp-date" data-i18n="exp_freelance_date">Jan 2025 – May 2025</span>
+                    <h4 class="exp-title" data-i18n="exp_freelance_title">Data Analyst – Financial & Administrative Data (Freelance)</h4>
+                    <p class="exp-company" data-i18n="exp_freelance_company">Oxygen Gym</p>
                     <ul class="exp-bullets">
-                      <li>Spearheaded the digital transformation of a 5-year legacy dataset, migrating manual records
+                      <li data-i18n="exp_freelance_bullet1">Spearheaded the digital transformation of a 5-year legacy dataset, migrating manual records
                         into a structured Excel database and training staff on digital data entry protocols.</li>
-                      <li>Architected and implemented a robust Star Schema data model in Power BI, transforming raw
+                      <li data-i18n="exp_freelance_bullet2">Architected and implemented a robust Star Schema data model in Power BI, transforming raw
                         operational data into interactive dashboards for financial and inventory tracking.</li>
-                      <li>Conducted deep-dive analysis into subscriptions and expenditures, uncovering that aggressive
+                      <li data-i18n="exp_freelance_bullet3">Conducted deep-dive analysis into subscriptions and expenditures, uncovering that aggressive
                         cost-cutting measures were inadvertently suppressing revenue and growth.</li>
-                      <li>Delivered data-driven strategic recommendations that pivoted business operations, resulting
+                      <li data-i18n="exp_freelance_bullet4">Delivered data-driven strategic recommendations that pivoted business operations, resulting
                         in a documented +25% increase in annual sales within the first year.</li>
                     </ul>
                   </div>
@@ -6011,17 +6653,17 @@
                 <div class="experience-card" tabindex="0">
                   <div class="exp-icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div>
                   <div class="exp-info">
-                    <span class="exp-date">Aug 2024 – Nov 2024</span>
-                    <h4 class="exp-title">Data Analyst – Competitor Analysis</h4>
-                    <p class="exp-company">Iris Communications</p>
+                    <span class="exp-date" data-i18n="exp_iris_date">Aug 2024 – Nov 2024</span>
+                    <h4 class="exp-title" data-i18n="exp_iris_title">Data Analyst – Competitor Analysis</h4>
+                    <p class="exp-company" data-i18n="exp_iris_company">Iris Communications</p>
                     <ul class="exp-bullets">
-                      <li>Conducted extensive competitor benchmarking for Iris Communications, performing deep-dive
+                      <li data-i18n="exp_iris_bullet1">Conducted extensive competitor benchmarking for Iris Communications, performing deep-dive
                         analysis into social media performance and digital presence.</li>
-                      <li>Executed SWOT analysis for key market players, identifying strategic strengths, weaknesses,
+                      <li data-i18n="exp_iris_bullet2">Executed SWOT analysis for key market players, identifying strategic strengths, weaknesses,
                         and core marketing tactics to inform internal decision-making.</li>
-                      <li>Quantified audience engagement metrics across multiple platforms, providing comparative
+                      <li data-i18n="exp_iris_bullet3">Quantified audience engagement metrics across multiple platforms, providing comparative
                         insights into competitor reach and community growth.</li>
-                      <li>Developed a comprehensive ranking system and strategic roadmap, establishing performance
+                      <li data-i18n="exp_iris_bullet4">Developed a comprehensive ranking system and strategic roadmap, establishing performance
                         benchmarks based on both direct and aspirational competitors.</li>
                     </ul>
                   </div>
@@ -6037,92 +6679,93 @@
     <!-- SERVICES -->
     <section id="services" aria-labelledby="services-title">
       <div class="section-anim-container">
-        <h2 id="services-title" class="section-title anim-child" style="transition-delay: 0.1s;">Professional Services
+        <h2 id="services-title" class="section-title anim-child" style="transition-delay: 0.1s;" data-i18n="services_title">Professional Services
         </h2>
         <div class="services-grid">
           <!-- 1. Dashboard Analysis -->
           <div class="service-card anim-child" data-service="dashboard-bi" style="transition-delay: 0.2s;" tabindex="0"
             role="button" aria-label="View Dashboard Analysis & BI details">
-            <div class="service-tag">Analytics</div>
+            <div class="service-tag" data-i18n="service_tag_analytics">Analytics</div>
             <div class="service-icon"><i class="fa-solid fa-chart-pie"></i></div>
             <div class="service-info">
-              <h3>Dashboard Analysis & BI</h3>
-              <p>Transform raw data into real-time interactive dashboards that drive decisions.</p>
+              <h3 data-i18n="service_db_title">Dashboard Analysis & BI</h3>
+              <p data-i18n="service_db_desc">Transform raw data into real-time interactive dashboards that drive decisions.</p>
             </div>
             <div class="service-footer">
-              <span class="service-cta">Explore Details <i class="fa-solid fa-arrow-right"></i></span>
+              <span class="service-cta"><span data-i18n="service_explore">Explore Details</span> <i class="fa-solid fa-arrow-right"></i></span>
             </div>
           </div>
 
           <!-- 2. SQL Data Expert -->
           <div class="service-card anim-child" data-service="sql-expert" style="transition-delay: 0.3s;" tabindex="0"
             role="button" aria-label="View SQL Data Expert details">
-            <div class="service-tag">Database</div>
+            <div class="service-tag" data-i18n="service_tag_database">Database</div>
             <div class="service-icon"><i class="fa-solid fa-database"></i></div>
             <div class="service-info">
-              <h3>SQL Data Expert</h3>
-              <p>Complex query optimization, database design, and data extraction at scale.</p>
+              <h3 data-i18n="service_sql_title">SQL Data Expert</h3>
+              <p data-i18n="service_sql_desc">Complex query optimization, database design, and data extraction at scale.</p>
             </div>
             <div class="service-footer">
-              <span class="service-cta">Explore Details <i class="fa-solid fa-arrow-right"></i></span>
+              <span class="service-cta"><span data-i18n="service_explore">Explore Details</span> <i class="fa-solid fa-arrow-right"></i></span>
             </div>
           </div>
 
           <!-- 3. Advanced Excel -->
           <div class="service-card anim-child" data-service="excel-solutions" style="transition-delay: 0.4s;"
             tabindex="0" role="button" aria-label="View Advanced Excel Solutions details">
-            <div class="service-tag">Efficiency</div>
+            <div class="service-tag" data-i18n="service_tag_efficiency">Efficiency</div>
             <div class="service-icon"><i class="fa-solid fa-file-excel"></i></div>
             <div class="service-info">
-              <h3>Advanced Excel Solutions</h3>
-              <p>Automated reporting, VPC/Macros, and sophisticated data modeling for business.</p>
+              <h3 data-i18n="service_excel_title">Advanced Excel Solutions</h3>
+              <p data-i18n="service_excel_desc">Automated reporting, VPC/Macros, and sophisticated data modeling for business.</p>
             </div>
             <div class="service-footer">
-              <span class="service-cta">Explore Details <i class="fa-solid fa-arrow-right"></i></span>
+              <span class="service-cta"><span data-i18n="service_explore">Explore Details</span> <i class="fa-solid fa-arrow-right"></i></span>
             </div>
           </div>
 
           <!-- 4. Media Buying -->
           <div class="service-card anim-child" data-service="media-buying" style="transition-delay: 0.5s;" tabindex="0"
             role="button" aria-label="View Data-Driven Media Buying details">
-            <div class="service-tag">Growth</div>
+            <div class="service-tag" data-i18n="service_tag_growth">Growth</div>
             <div class="service-icon"><i class="fa-solid fa-bullseye"></i></div>
             <div class="service-info">
-              <h3>Data-Driven Media Buying</h3>
-              <p>Performance marketing optimized by actual conversion data and ROI tracking.</p>
+              <h3 data-i18n="service_mb_title">Data-Driven Media Buying</h3>
+              <p data-i18n="service_mb_desc">Performance marketing optimized by actual conversion data and ROI tracking.</p>
             </div>
             <div class="service-footer">
-              <span class="service-cta">Explore Details <i class="fa-solid fa-arrow-right"></i></span>
+              <span class="service-cta"><span data-i18n="service_explore">Explore Details</span> <i class="fa-solid fa-arrow-right"></i></span>
             </div>
           </div>
 
           <!-- 5. Social Media Specialist -->
           <div class="service-card anim-child" data-service="social-media" style="transition-delay: 0.6s;" tabindex="0"
             role="button" aria-label="View Social Media Specialist details">
-            <div class="service-tag">Marketing</div>
+            <div class="service-tag" data-i18n="service_tag_marketing">Marketing</div>
             <div class="service-icon"><i class="fa-solid fa-share-nodes"></i></div>
             <div class="service-info">
-              <h3>Social Media Specialist</h3>
-              <p>Strategic content planning and community management backed by audience insights.</p>
+              <h3 data-i18n="service_sm_title">Social Media Specialist</h3>
+              <p data-i18n="service_sm_desc">Strategic content planning and community management backed by audience insights.</p>
             </div>
             <div class="service-footer">
-              <span class="service-cta">Explore Details <i class="fa-solid fa-arrow-right"></i></span>
+              <span class="service-cta"><span data-i18n="service_explore">Explore Details</span> <i class="fa-solid fa-arrow-right"></i></span>
             </div>
           </div>
 
           <!-- 6. CRM & Data Management -->
           <div class="service-card anim-child" data-service="crm-data" style="transition-delay: 0.7s;" tabindex="0"
             role="button" aria-label="View CRM & Data Management details">
-            <div class="service-tag">Strategy</div>
+            <div class="service-tag" data-i18n="service_tag_strategy">Strategy</div>
             <div class="service-icon"><i class="fa-solid fa-users-gear"></i></div>
             <div class="service-info">
-              <h3>CRM & Data Management</h3>
-              <p>Organize, clean, and leverage your customer data to build lasting loyalty.</p>
+              <h3 data-i18n="service_crm_title">CRM & Data Management</h3>
+              <p data-i18n="service_crm_desc">Organize, clean, and leverage your customer data to build lasting loyalty.</p>
             </div>
             <div class="service-footer">
-              <span class="service-cta">Explore Details <i class="fa-solid fa-arrow-right"></i></span>
+              <span class="service-cta"><span data-i18n="service_explore">Explore Details</span> <i class="fa-solid fa-arrow-right"></i></span>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -6132,13 +6775,14 @@
     <!-- PROJECTS -->
     <section id="projects" aria-labelledby="projects-title">
       <div class="section-anim-container">
-        <h2 id="projects-title" class="section-title anim-child" style="transition-delay: 0.1s;">Projects</h2>
+        <h2 id="projects-title" class="section-title anim-child" style="transition-delay: 0.1s;" data-i18n="projects_title">Projects</h2>
+
 
         <div class="projects-grid">
 
           <div class="project-card anim-child" tabindex="0" style="transition-delay: 0.2s;">
             <div class="project-inner">
-              <h3 class="project-title">Coffee Shop Sales Dashboard</h3>
+              <h3 class="project-title" data-i18n="project_coffee_title">Coffee Shop Sales Dashboard</h3>
 
               <div class="project-media-wrapper">
                 <div class="project-image">
@@ -6421,7 +7065,7 @@
                 </div>
 
                 <div class="project-details">
-                  <p class="project-description">
+                  <p class="project-description" data-i18n="project_coffee_desc">
                     Analyzed café sales performance and customer behavior using Power BI after extensive data
                     cleaning.
                   </p>
@@ -6450,12 +7094,13 @@
 
           <div class="project-card anim-child" tabindex="0" style="transition-delay: 0.3s;">
             <div class="project-inner">
-              <h3 class="project-title">Marketing Campaigns Analysis</h3>
+              <h3 class="project-title" data-i18n="project_marketing_title">Marketing Campaigns Analysis</h3>
               <div class="project-media-wrapper">
                 <div class="project-image">
                   <svg width="1459" height="1459" viewBox="0 0 1459 1459" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0)">
+
                       <path
                         d="M145.414 474.133C145.414 474.133 147.415 474.133 151.011 474.133C151.191 474.133 151.374 474.133 151.561 474.133C155.076 473.882 158.917 473.404 162.492 474.133C162.717 474.133 162.944 474.133 163.173 474.133C166.117 473.404 168.997 473.882 172.105 474.099C172.3 474.107 172.491 474.112 172.716 474.133C174.709 474.133 176.787 474.133 178.938 474.133C179.208 474.133 179.479 474.133 179.751 474.133C182.917 473.404 186.277 473.404 189.705 474.125C189.903 474.128 190.101 474.13 190.3 474.133C190.499 474.133 190.697 474.133 190.896 474.133C191.083 474.133 191.27 474.133 191.451 474.133C194.438 473.882 197.798 473.404 200.708 474.133C200.987 474.112 201.265 474.09 201.543 474.066C204.597 473.81 207.673 473.464 210.706 474.126C210.897 474.129 211.088 474.13 211.28 474.133C211.469 474.133 211.658 474.133 211.848 474.133C212.03 474.133 212.213 474.133 212.396 474.133C215.558 473.882 218.918 473.404 222.079 474.133C222.387 474.012 222.698 473.913 223.011 473.833C225.827 473.11 228.821 473.904 231.55 474.106C231.829 474.118 232.097 474.122 232.366 474.133C234.224 474.133 236.087 474.133 237.953 474.133C238.207 474.133 238.462 474.133 238.711 474.133C242.919 473.404 246.759 473.404 250.924 474.133C251.244 474.15 251.563 474.157 251.881 474.158C256.017 474.169 260.032 473.012 264.085 474.133C264.404 474.082 264.717 474.036 265.033 473.995C269.043 473.471 273.463 473.9 277.401 474.133C277.625 474.133 277.849 474.133 278.071 474.133C282.281 473.404 286.121 472.926 290.45 474.127C290.666 474.133 290.874 474.133 291.081 474.133C294.761 473.404 299.081 473.882 303.017 473.958C303.314 473.957 303.608 473.967 303.901 473.986C306.524 474.15 309.053 474.955 311.608 473.87C311.892 473.845 312.171 473.823 312.452 473.804C314.371 473.691 316.345 473.704 318.339 474.123C318.619 474.064 318.895 474.009 319.172 473.959C322.2 473.409 325.27 473.464 328.231 474.126C328.529 474.029 328.821 473.945 329.113 473.875C332.281 473.078 335.362 473.882 338.441 473.882C337.961 472.926 337.961 472.448 338.087 471.593C338.06 471.356 338.031 471.104 338 470.835C337.724 468.439 337.306 464.801 336.77 460.141C336.741 459.895 336.711 459.647 336.681 459.393C336.588 457.527 336.059 455.447 335.72 453.41C335.668 453.095 335.622 452.787 335.574 452.458C335.328 451.218 335.204 449.881 335.126 448.528C335.107 448.249 335.089 447.97 335.069 447.684C334.459 445.164 334.043 442.683 333.902 440.048C333.887 439.756 333.875 439.461 333.866 439.164C333.721 436.282 333.67 433.277 333.429 430.365C333.401 430.035 333.371 429.707 333.338 429.373C332.674 427.171 332.235 425.114 332.038 423.058C332.006 422.758 331.979 422.458 331.953 422.152C331.74 419.175 330.512 415.714 331.027 412.676C331.073 412.399 331.135 412.125 331.211 411.853C330.949 409.553 330.349 407.293 330.009 405.071C329.961 404.753 329.918 404.437 329.882 404.121C329.801 399.783 329.321 395.958 328.89 391.599C328.863 391.377 328.837 391.148 328.811 390.92C327.947 387.164 327.058 383.598 327.349 379.851C327.371 379.563 327.401 379.274 327.438 378.983C327.416 376.894 327.081 374.885 326.769 372.918C326.727 372.628 326.686 372.338 326.648 372.04C326.87 368.168 325.644 364.286 325.164 360.331C325.127 360.027 325.094 359.722 325.067 359.417C324.041 355.323 324.041 351.021 323.73 346.734C323.701 346.475 323.671 346.216 323.641 345.958C323.549 345.161 323.458 344.364 323.366 343.567C323.335 343.302 323.305 343.036 323.274 342.771C322.6 337.157 322.6 331.42 321.362 326.127C321.332 325.879 321.302 325.617 321.272 325.355C321.04 323.34 320.809 321.332 320.58 319.336C320.559 319.154 320.538 318.973 320.517 318.791C320.005 316.154 319.624 313.631 319.387 311.061C319.359 310.775 319.334 310.489 319.309 310.202C318.28 306.561 317.8 303.214 318.306 299.565C318.285 299.375 318.263 299.184 318.236 298.989C317.778 297.517 317.549 295.944 317.417 294.373C317.388 294.056 317.364 293.739 317.341 293.421C316.965 290.727 316.331 287.902 316.224 285.097C316.211 284.785 316.204 284.474 316.204 284.161C316.344 281.518 315.192 279.317 315.428 276.71C315.453 276.418 315.495 276.122 315.558 275.818C315.026 273.152 314.271 270.052 314.271 267.086C314.271 266.493 314.301 265.905 314.369 265.327C313.85 263.446 313.797 261.523 313.698 259.577C313.682 259.287 313.665 258.998 313.644 258.702C313.48 255.887 313 253.019 312.631 250.211C312.61 250.028 312.589 249.845 312.568 249.666C310.726 233.644 309.575 223.631 309.575 223.631H116.61C116.61 223.631 118.035 236.027 120.252 255.305C120.273 255.493 120.294 255.679 120.315 255.868C120.515 258.756 120.515 261.624 121.317 264.589C121.341 264.784 121.364 264.986 121.388 265.187C121.408 265.367 121.429 265.547 121.45 265.728C121.471 265.908 121.492 266.09 121.513 266.271C121.955 269.273 122.435 272.619 122.552 275.29C122.572 275.484 122.594 275.678 122.617 275.876C123.33 278.588 122.583 282.027 123.447 284.779C123.526 285.03 123.617 285.276 123.725 285.516C124.198 288.392 124.856 291.263 125.043 294.139C125.063 294.458 125.078 294.778 125.086 295.097C124.477 297.878 125.042 300.997 125.67 303.944C125.796 304.534 125.924 305.117 126.045 305.688C126.275 309.43 127.235 313.254 127.333 316.892C127.361 317.127 127.387 317.364 127.415 317.601C127.498 318.322 127.58 319.043 127.664 319.767C127.692 320.028 127.72 320.279 127.747 320.536C128.008 322.702 128.117 325.069 128.34 327.385C128.372 327.715 128.406 328.045 128.443 328.373C129.11 333.023 130.84 337.515 130.421 341.895C130.393 342.188 130.356 342.481 130.307 342.778C130.57 346.39 130.189 349.905 131.304 353.463C131.406 353.788 131.519 354.113 131.647 354.441C132.514 358.192 133.474 361.538 132.924 365.519C132.954 365.782 132.984 366.045 133.015 366.308C133.12 367.229 133.226 368.148 133.331 369.064C133.353 369.248 133.374 369.431 133.395 369.615C133.441 371.875 133.297 374.118 133.51 376.341C133.541 376.664 133.579 376.985 133.627 377.311C133.856 379.656 134.395 381.765 134.852 383.908C134.917 384.214 134.98 384.521 135.041 384.829C135.527 387.138 135.73 389.401 135.928 391.599C135.958 391.92 135.987 392.24 136.018 392.578C136.214 394.828 136.622 397.068 136.941 399.333C136.987 399.656 137.03 399.98 137.071 400.305C137.493 402.51 137.342 404.73 137.424 406.978C137.435 407.299 137.452 407.621 137.475 407.943C137.395 409.839 137.954 411.743 138.459 413.651C138.543 413.969 138.626 414.287 138.694 414.617C137.794 419.383 139.234 424.164 140.2 428.813C140.222 428.998 140.244 429.188 140.266 429.378C143.323 455.948 145.414 474.133 145.414 474.133Z"
                         fill="var(--accent-a)" />
@@ -8944,7 +9589,7 @@
                 </div>
 
                 <div class="project-details">
-                  <p class="project-description">
+                  <p class="project-description" data-i18n="project_marketing_desc">
                     Analyzed campaign performance to measure ROI, understand engagement, and provide optimization
                     insights.
                   </p>
@@ -8973,7 +9618,7 @@
 
           <div class="project-card anim-child" tabindex="0" style="transition-delay: 0.4s;">
             <div class="project-inner">
-              <h3 class="project-title">Gym Financial Analysis</h3>
+              <h3 class="project-title" data-i18n="project_gym_title">Gym Financial Analysis</h3>
               <div class="project-media-wrapper">
 
                 <div class="project-image">
@@ -9595,7 +10240,7 @@
                 </div>
 
                 <div class="project-details">
-                  <p class="project-description">
+                  <p class="project-description" data-i18n="project_gym_desc">
                     Turned 5 years of paper records into a Power BI dashboard to guide critical financial &
                     administrative decisions.
                   </p>
@@ -9626,7 +10271,7 @@
 
         <div class="projects-footer anim-child" style="transition-delay: 0.5s;">
           <a href="projects.html" class="view-all-btn">
-            View All <i class="fa-solid fa-arrow-right"></i>
+            <span data-i18n="project_view_all">View All Projects</span> <i class="fa-solid fa-arrow-right"></i>
           </a>
         </div>
       </div>
@@ -9646,8 +10291,8 @@
           <!-- === الجزء الأيسر (العنوان والنص) === -->
           <div class="achievements-intro anim-child" style="transition-delay: 0.1s;">
             <div>
-              <h2 id="achievements-title" class="section-title">Achievements</h2>
-              <p class="achievements-summary">
+              <h2 id="achievements-title" class="section-title" data-i18n="achievements_title">Achievements</h2>
+              <p class="achievements-summary" data-i18n="achievements_summary">
                 𝒫𝓊𝓉𝓉𝒾𝓃𝑔 𝓆𝓊𝒶𝓃𝓉𝒾𝒻𝒾𝑒𝒹 𝒶𝒸𝒽𝒾𝑒𝓋𝑒𝓂𝑒𝓃𝓉𝓈 𝑜𝓃 𝒶 𝓇𝑒𝓈𝓊𝓂𝑒 𝒾𝓈 𝑔𝓇𝑒𝒶𝓉,
                 𝒷𝓊𝓉
                 𝐼 𝒿𝓊𝓈𝓉 𝒹𝑜𝓃'𝓉 𝓌𝑜𝓇𝓀 𝓌𝒾𝓉𝒽 𝒽𝒶𝓇𝒹 𝓃𝓊𝓂𝒷𝑒𝓇𝓈. 𝐼 𝒽𝒶𝓋𝑒 𝓃𝑜 𝒹𝒶𝓉𝒶 𝓉𝑜
@@ -9657,6 +10302,7 @@
                 𝓌𝒾𝓁𝓁 𝒷𝑒 𝒶 𝓈𝓊𝓂𝓂𝒶𝓇𝓎.
               </p>
             </div>
+
 
             <div
               style="margin: 20px 0 auto; text-align: center; width: 100%; display: flex; justify-content: center; align-items: center;">
@@ -9687,17 +10333,18 @@
               <div class="achievement-card" tabindex="0">
                 <div class="card-content">
                   <div class="card-info">
-                    <h3 class="card-title">Data Analyst Professional</h3>
-                    <p class="card-description">
+                    <h3 class="card-title" data-i18n="achieve_nti_title">Data Analyst Professional</h3>
+                    <p class="card-description" data-i18n="achieve_nti_desc">
                       Through this intensive program at the National Telecommunication Institute (NTI), I advanced my
                       expertise in Excel, Power BI, SQL, and Python for data analysis. I specialized in database design
                       using ERD diagrams and gained deep insights into business processes and analytics workflows.
                     </p>
                     <div class="card-meta">
                       <span class="card-date"><i class="fa-regular fa-calendar"></i> 2026 </span>
-                      <span class="card-category"><i class="fa-solid fa-chart-pie"></i> Data Analytics</span>
+                      <span class="card-category"><i class="fa-solid fa-chart-pie"></i> <span data-i18n="achieve_cat_analytics">Data Analytics</span></span>
                     </div>
                   </div>
+
                   <div class="card-image">
                     <img src="images/nti-logo.png" alt="NTI Logo">
                   </div>
@@ -9710,17 +10357,18 @@
               <div class="achievement-card" tabindex="0">
                 <div class="card-content">
                   <div class="card-info">
-                    <h3 class="card-title">Digital Marketing Specialist</h3>
-                    <p class="card-description">
+                    <h3 class="card-title" data-i18n="achieve_depi_title">Digital Marketing Specialist</h3>
+                    <p class="card-description" data-i18n="achieve_depi_desc">
                       Equipped with comprehensive skills in digital marketing and content strategy through the DEPI
                       initiative. Mastered media buying campaigns and strategy across all social media platforms, Google
                       Ads, SEO, SEM, and analyzed consumer behavior to deliver data-driven results.
                     </p>
                     <div class="card-meta">
                       <span class="card-date"><i class="fa-regular fa-calendar"></i> Feb 22, 2026</span>
-                      <span class="card-category"><i class="fa-solid fa-bullhorn"></i> Digital Marketing</span>
+                      <span class="card-category"><i class="fa-solid fa-bullhorn"></i> <span data-i18n="achieve_cat_marketing">Digital Marketing</span></span>
                     </div>
                   </div>
+
                   <div class="card-image">
                     <img src="https://depi.gov.eg/assets/images/proAr.png" alt="DEPI Logo">
                   </div>
@@ -9733,17 +10381,18 @@
               <div class="achievement-card" tabindex="0">
                 <div class="card-content">
                   <div class="card-info">
-                    <h3 class="card-title">Master SQL for Data Analysis</h3>
-                    <p class="card-description">
+                    <h3 class="card-title" data-i18n="achieve_sql_title">Master SQL for Data Analysis</h3>
+                    <p class="card-description" data-i18n="achieve_sql_desc">
                       Through this certification, I acquired practical SQL skills tailored for data analysis. It
                       prepared me to write complex queries, effectively aggregate data, and utilize window functions,
                       enabling me to extract actionable insights and solve real-world data problems.
                     </p>
                     <div class="card-meta">
                       <span class="card-date"><i class="fa-regular fa-calendar"></i> Jan 13, 2026</span>
-                      <span class="card-category"><i class="fa-solid fa-database"></i> SQL & Data Analysis</span>
+                      <span class="card-category"><i class="fa-solid fa-database"></i> <span data-i18n="achieve_cat_sql">SQL & Data Analysis</span></span>
                     </div>
                   </div>
+
                   <div class="card-image">
                     <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
                       <text x="2" y="28" font-family="Arial, sans-serif" font-weight="900" font-size="24"
@@ -9761,16 +10410,17 @@
               <div class="achievement-card" tabindex="0">
                 <div class="card-content">
                   <div class="card-info">
-                    <h3 class="card-title">Google Data Analytics Professional Certificate</h3>
-                    <p class="card-description">
+                    <h3 class="card-title" data-i18n="achieve_google_title">Google Data Analytics Professional Certificate</h3>
+                    <p class="card-description" data-i18n="achieve_google_desc">
                       The Google Data Analytics Professional Certificate prepared me for introductory data analytics
                       roles through eight hands-on, practice-based courses developed by Google.
                     </p>
                     <div class="card-meta">
                       <span class="card-date"><i class="fa-regular fa-calendar"></i> Dec 31, 2024</span>
-                      <span class="card-category"><i class="fa-solid fa-robot"></i> Data Analytics</span>
+                      <span class="card-category"><i class="fa-solid fa-robot"></i> <span data-i18n="achieve_cat_analytics">Data Analytics</span></span>
                     </div>
                   </div>
+
                   <div class="card-image">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
                       alt="Google Logo">
@@ -9784,71 +10434,37 @@
               <div class="achievement-card" tabindex="0">
                 <div class="card-content">
                   <div class="card-info">
-                    <h3 class="card-title">IBM Data Analyst Professional Certificate</h3>
-                    <p class="card-description">
+                    <h3 class="card-title" data-i18n="achieve_ibm_title">IBM Data Analyst Professional Certificate</h3>
+                    <p class="card-description" data-i18n="achieve_ibm_desc">
                       This IBM Professional Certificate is earned by completing 11 courses in Data Analytics,
                       covering
                       tools like Excel, SQL, Python, and Cognos Analytics.
                     </p>
                     <div class="card-meta">
                       <span class="card-date"><i class="fa-regular fa-calendar"></i> Jan 2, 2025</span>
-                      <span class="card-category"><i class="fa-solid fa-robot"></i> Data Analytics</span>
+                      <span class="card-category"><i class="fa-solid fa-robot"></i> <span data-i18n="achieve_cat_analytics">Data Analytics</span></span>
                     </div>
                   </div>
                   <div class="card-image">
                     <svg class="ibm-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1075 401.15">
-                      <title>Logo International Business Machines Corporation</title>
-                      <g fill="#1f70c1">
-                        <g id="I">
-                          <rect y="373.17" width="194.43" height="27.932" />
-                          <rect y="319.83" width="194.43" height="27.932" />
-                          <rect x="55.468" y="266.54" width="83.399" height="27.932" />
-                          <rect x="55.468" y="213.25" width="83.399" height="27.932" />
-                          <rect x="55.468" y="159.96" width="83.399" height="27.932" />
-                          <rect x="55.468" y="106.58" width="83.399" height="27.932" />
-                          <rect y="53.288" width="194.43" height="27.932" />
-                          <rect width="194.43" height="27.932" />
+                      <defs>
+                        <style>
+                          .cls-1 {
+                            fill: var(--text);
+                          }
+                        </style>
+                      </defs>
+                      <g id="Layer_2" data-name="Layer 2">
+                        <g id="Layer_1-2" data-name="Layer 1">
+                          <path class="cls-1"
+                            d="M301,315.65v28.8H214.6v-28.8Zm-86.4-44.55v28.8H301v-28.8Zm86.4-44.6v28.8H214.6v-28.8Zm-86.4-44.55v28.8H301v-28.8Zm86.4-44.6v28.8H214.6v-28.8Zm-86.4-44.55v28.8H301v-28.8Zm86.4-44.6v28.8H214.6V48.2ZM152.9,315.65v28.8H66.5v-28.8Zm-86.4-44.55v28.8H152.9v-28.8Zm86.4-44.6v28.8H66.5v-28.8Zm-86.4-44.55v28.8H152.9v-28.8Zm86.4-44.6v28.8H66.5v-28.8Zm-86.4-44.55v28.8H152.9v-28.8Zm86.4-44.6v28.8H66.5V48.2Z" />
+                          <path class="cls-1"
+                            d="M608,315.65v28.8H362.7v-28.8Zm-245.3-44.55v28.8H586v-28.8Zm201.2-44.6v28.8H362.7v-28.8Zm-201.2-44.55v28.8H541.9v-28.8Zm157.1-44.6v28.8H362.7v-28.8Zm-157.1-44.55v28.8H497.8v-28.8Zm113-44.6v28.8H362.7V48.2Z" />
+                          <path class="cls-1"
+                            d="M647.9,344.45V137.3h42v76l31.2-76h48l-43.1,96,48.1,111.15H724.8l-34.9-85-42,85Zm0-251.75V48.2h42V92.7Zm230.1,251.75V137.3h41.9v76l31.3-76h48l-43.2,96,48.2,111.15H954.9l-34.9-85-42,85Zm0-251.75V48.2h41.9V92.7Zm155,251.75v-28.8H968.1v-28.8h64.9v-28.8H968.1v-28.8h64.9v-28.8H968.1v-28.8h64.9V48.2H968.1Z" />
                         </g>
-                        <g id="B">
-                          <path d="m222.17 400.85 207.11 0.297c27.734 0 52.793-10.697 71.513-27.932h-278.62z" />
-                          <path d="m222.17 347.76h299.03c5.051-8.617 8.815-18.027 11.094-27.932h-310.12z" />
-                          <rect x="277.73" y="266.54" width="83.3" height="27.932" />
-                          <path d="m444.43 266.54v27.932h90.927c0-9.608-1.288-19.017-3.764-27.932z" />
-                          <path d="m497.92 213.25h-220.19v27.932h243.46c-6.34-10.698-14.165-20.107-23.277-27.932z" />
-                          <path d="m277.73 159.96v27.932h220.19c9.311-7.825 17.135-17.235 23.277-27.932z" />
-                          <rect x="277.73" y="106.58" width="83.3" height="27.932" />
-                          <path d="m444.43 134.51h87.163c2.476-8.914 3.764-18.324 3.764-27.932h-90.927z" />
-                          <path d="m521.2 53.288h-299.03v27.932h310.12c-2.575-9.905-6.339-19.314-11.093-27.932z" />
-                          <path d="m429.28 0h-207.11v27.932h278.53c-18.621-17.235-43.878-27.932-71.414-27.932z" />
-                        </g>
-                        <g id="M">
-                          <polygon points="555.57 81.22 742.67 81.22 733.06 53.288 555.57 53.288" />
-                          <polygon points="555.57 27.932 724.25 27.932 714.64 0 555.57 0" />
-                          <polygon points="861.03 401.17 861.03 373.24 1e3 373.24 1e3 401.17" />
-                          <polygon points="861.03 347.76 861.03 319.83 1e3 319.83 1e3 347.76" />
-                          <polygon
-                            points="777.73 182.54 769.91 159.96 694.43 159.96 611.03 159.96 611.03 187.89 694.43 187.89 694.43 162.24 703.25 187.89 852.22 187.89 861.03 162.24 861.03 187.89 944.43 187.89 944.43 159.96 861.03 159.96 785.56 159.96" />
-                          <polygon points="944.43 106.58 803.98 106.58 794.37 134.51 944.43 134.51" />
-                          <polygon points="1e3 27.932 1e3 0 840.93 0 831.32 27.932" />
-                          <polygon points="768.13 373.22 777.73 400.85 787.34 373.22" />
-                          <polygon points="749.5 319.83 759.31 347.76 796.16 347.76 806.06 319.83" />
-                          <polygon points="730.78 266.54 740.59 294.47 814.88 294.47 824.68 266.54" />
-                          <polygon points="721.97 241.18 833.6 241.18 843.11 213.25 712.36 213.25" />
-                          <polygon points="611.03 134.51 761.09 134.51 751.49 106.58 611.03 106.58" />
-                          <polygon points="1e3 53.288 822.4 53.288 812.9 81.22 1e3 81.22" />
-                          <rect x="555.57" y="373.22" width="138.97" height="27.932" />
-                          <rect x="555.57" y="319.83" width="138.97" height="27.932" />
-                          <rect x="611.03" y="266.54" width="83.399" height="27.932" />
-                          <rect x="611.03" y="213.25" width="83.399" height="27.932" />
-                          <rect x="861.03" y="213.25" width="83.399" height="27.932" />
-                          <rect x="861.03" y="266.54" width="83.399" height="27.932" />
-                        </g>
-                        <path id="Registered"
-                          d="m1052 357.15a22 22 0 0 0-22 22 22 22 0 0 0 22 22 22 22 0 0 0 22-22 22 22 0 0 0-22-22zm0 4a18 18 0 0 1 18 18 18 18 0 0 1-18 18 18 18 0 0 1-18-18 18 18 0 0 1 18-18zm-9.3476 6.793v22.414h5.453v-7.7305h3.0978l4.164 7.7305h5.9804l-5.0234-8.582c2.4616-0.96446 4.0624-3.2158 4.0624-6.75 0-4.0818-2.5594-7.082-7.582-7.082zm5.453 4.2891h4.0548c1.7114 0 2.668 0.75016 2.668 2.3555v1.6133c0 1.6053-0.9566 2.3594-2.668 2.3594h-4.0548z" />
                       </g>
                     </svg>
-
-
                   </div>
                 </div>
               </div>
@@ -9859,14 +10475,14 @@
               <div class="achievement-card" tabindex="0">
                 <div class="card-content">
                   <div class="card-info">
-                    <h3 class="card-title">Excel Skills for Data Analytics and Visualization</h3>
-                    <p class="card-description">
+                    <h3 class="card-title" data-i18n="achieve_macq_title">Excel Skills for Data Analytics and Visualization</h3>
+                    <p class="card-description" data-i18n="achieve_macq_desc">
                       Through this specialization from Macquarie University, I can bring data to life using advanced
                       Excel functions, creative visualizations, and powerful automation features.
                     </p>
                     <div class="card-meta">
                       <span class="card-date"><i class="fa-regular fa-calendar"></i> Oct 28, 2024</span>
-                      <span class="card-category"><i class="fa-solid fa-robot"></i> Data Visualization</span>
+                      <span class="card-category"><i class="fa-solid fa-robot"></i> <span data-i18n="achieve_cat_visualization">Data Visualization</span></span>
                     </div>
                   </div>
 
@@ -10039,15 +10655,15 @@
               <div class="achievement-card" tabindex="0">
                 <div class="card-content">
                   <div class="card-info">
-                    <h3 class="card-title">IBM _ Data Analysis and Visualization Foundations</h3>
-                    <p class="card-description">
+                    <h3 class="card-title" data-i18n="achieve_ibm_found_title">IBM _ Data Analysis and Visualization Foundations</h3>
+                    <p class="card-description" data-i18n="achieve_ibm_found_desc">
                       I learned foundational data analysis, visualization, and dashboard creation using core tools
                       like
                       Excel and Cognos Analytics.
                     </p>
                     <div class="card-meta">
                       <span class="card-date"><i class="fa-regular fa-calendar"></i> Dec 24, 2024</span>
-                      <span class="card-category"><i class="fa-solid fa-robot"></i> Data Visualization</span>
+                      <span class="card-category"><i class="fa-solid fa-robot"></i> <span data-i18n="achieve_cat_visualization">Data Visualization</span></span>
                     </div>
                   </div>
                   <div class="card-image">
@@ -10122,8 +10738,9 @@
     <section id="testimonials" aria-labelledby="testimonials-title">
       <div class="section-anim-container">
         <div class="testimonials-container">
-          <h2 id="testimonials-title" class="section-title anim-child" style="transition-delay: 0.1s;">Trusted Insights
+          <h2 id="testimonials-title" class="section-title anim-child" style="transition-delay: 0.1s;" data-i18n="testimonials_title">Trusted Insights
           </h2>
+
 
           <div class="testimonial-spotlight anim-child" style="transition-delay: 0.2s;">
             <!-- Content will be injected by JS -->
@@ -10142,36 +10759,38 @@
 
           <!-- === الجزء الأيسر (الفورم) === -->
           <div class="contact-form-wrapper anim-child" style="transition-delay: 0.1s;">
-            <h2 id="contact-title" class="section-title">Let's Work Together</h2>
-            <p class="contact-subtitle">Have a project in mind or just want to chat? Feel free to reach out, and I'll
+            <h2 id="contact-title" class="section-title" data-i18n="contact_title">Let's Work Together</h2>
+            <p class="contact-subtitle" data-i18n="contact_subtitle">Have a project in mind or just want to chat? Feel free to reach out, and I'll
               get back to you as soon as possible.</p>
             <form class="contact-form" action="https://getform.io/f/allqdeya" method="POST">
               <div class="input-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Full Name" required>
+                <label for="name" data-i18n="contact_label_name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Full Name" data-i18n-ph="contact_ph_name" required>
               </div>
               <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                <label for="email" data-i18n="contact_label_email">Email</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" data-i18n-ph="contact_ph_email" required>
               </div>
               <div class="input-group">
-                <label for="message">Message</label>
+                <label for="message" data-i18n="contact_label_message">Message</label>
                 <textarea id="message" name="message" placeholder="Tell me about your project or just say hi..."
-                  required></textarea>
+                  data-i18n-ph="contact_ph_message" required></textarea>
               </div>
               <button type="submit" class="send-btn">
-                Send <i class="fa-solid fa-paper-plane"></i>
+                <span data-i18n="contact_btn_send">Send</span> <i class="fa-solid fa-paper-plane"></i>
               </button>
             </form>
           </div>
+
 
           <!-- === الجزء الأوسط (معلومات التواصل) === -->
           <div class="contact-info-wrapper anim-child" style="transition-delay: 0.2s;">
             <ul class="contact-details-list">
               <li><i class="fa-solid fa-at"></i> <span>Amrmousa240@gmail.com</span></li>
               <li><i class="fa-solid fa-phone"></i> <span>+201017749925</span></li>
-              <li><i class="fa-solid fa-location-dot"></i> <span>Cairo - Egypt</span></li>
+              <li><i class="fa-solid fa-location-dot"></i> <span data-i18n="contact_location">Cairo - Egypt</span></li>
             </ul>
+
             <div class="social-links-grid">
               <a href="https://www.linkedin.com/in/amr-mousa0" aria-label="LinkedIn" class="social-icon"><i
                   class="fa-brands fa-linkedin-in"></i></a>
@@ -10325,8 +10944,67 @@
     <!-- ============================================== -->
     <!-- ================== Footer ================== -->
     <!-- ============================================== -->
-    <footer class="main-footer">
-      Made with <i class="fa-solid fa-heart"></i> by Amr Hazem
+    <footer class="luxury-footer">
+      <div class="footer-content">
+        <!-- Column 1: Brand -->
+        <div class="footer-col footer-brand-col">
+          <div class="footer-overline">
+            <span class="overline-dot"></span>
+            <span class="overline-text">DATA & MARKETING ANALYST</span>
+          </div>
+          <h2 class="footer-logo-text">Amr Mousa</h2>
+          <p class="footer-bio">
+            Data Analyst and Marketing Strategist specialized in advanced analytics, media buying optimization, CRM solutions, and data-driven growth. Transforming complex datasets into strategic, revenue-generating business decisions.
+          </p>
+        </div>
+
+        <!-- Column 2: Navigation -->
+        <div class="footer-col footer-nav-col">
+          <div class="footer-overline">
+            <i class="fa-solid fa-compass overline-icon"></i>
+            <span class="overline-text">NAVIGATION</span>
+          </div>
+          <div class="footer-nav-list">
+            <button onclick="goToSection('#hero')" data-i18n="nav_home">Home</button>
+            <button onclick="goToSection('#who')" data-i18n="nav_about">About</button>
+            <button onclick="goToSection('#education')" data-i18n="nav_resume">Resume</button>
+            <button onclick="goToSection('#services')" data-i18n="nav_services">Services</button>
+            <button onclick="goToSection('#projects')" data-i18n="nav_projects">Projects</button>
+            <button onclick="goToSection('#achievements')" data-i18n="nav_achievements">Achievements</button>
+            <button onclick="goToSection('#contact')" data-i18n="nav_contact">Contact</button>
+          </div>
+        </div>
+
+        <!-- Column 3: Connect -->
+        <div class="footer-col footer-connect-col">
+          <div class="footer-overline">
+            <i class="fa-solid fa-link overline-icon"></i>
+            <span class="overline-text">CONNECT</span>
+          </div>
+          <p class="footer-connect-text">
+            Follow my analytical journey or reach out directly across professional networks.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.linkedin.com/in/amr-mousa0" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://github.com/amr-mousa0" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.facebook.com/amr.mousa.927947" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://wa.me/201017749925" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="mailto:Amrmousa240@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          &copy; 2026 AMR MOUSA. ALL RIGHTS RESERVED.
+        </div>
+        <div class="footer-bottom-right">
+          <span class="footer-tagline">DESIGNED FOR DATA EXCELLENCE</span>
+          <button class="footer-back-to-top" onclick="main.scrollTo({ top: 0, behavior: 'smooth' })">
+            Back To Top <i class="fa-solid fa-arrow-up"></i>
+          </button>
+        </div>
+      </div>
     </footer>
 
 
@@ -10494,11 +11172,26 @@
 
       // helpers
       function goToSection(sel) {
-        document.querySelector(sel)?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-        playClick();
+        const luxuryLoader = document.getElementById('luxury-loader');
+        if (luxuryLoader) {
+          luxuryLoader.classList.remove('hidden');
+          playClick();
+          setTimeout(() => {
+            document.querySelector(sel)?.scrollIntoView({
+              behavior: 'auto',
+              block: 'start'
+            });
+            setTimeout(() => {
+              luxuryLoader.classList.add('hidden');
+            }, 600);
+          }, 400);
+        } else {
+          document.querySelector(sel)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          playClick();
+        }
       }
 
       // ensure saved UI applied on load
@@ -10549,6 +11242,24 @@
           } else {
             scrollTopBtn.classList.remove('visible');
           }
+
+          // ✨ تحديث اللينك النشط في الهيدر ✨
+          const sections = main.querySelectorAll('section');
+          let currentSection = '#hero';
+          sections.forEach(sec => {
+            const secTop = sec.offsetTop;
+            if (main.scrollTop >= secTop - 200) {
+              currentSection = '#' + sec.getAttribute('id');
+            }
+          });
+          const navLinks = document.querySelectorAll('.header-nav .nav-link');
+          navLinks.forEach(link => {
+            if (link.getAttribute('data-section') === currentSection) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
         });
 
         scrollTopBtn.addEventListener('click', (e) => {
@@ -10572,98 +11283,101 @@
       const testimonialsData = [
         {
           id: "t1",
-          quote: "Amr helped us a lot with our competitor analysis. He built a great dashboard that tracks our performance and shows exactly where we stand in the market. He’s organized, proactive, and very easy to work with.",
-          name: "Ahmed Hassan",
-          title: "Marketing Director @ Iris Communications",
+          quote: "test_ahmed_hassan_quote",
+          name: "test_ahmed_hassan_name",
+          defaultName: "Ahmed Hassan",
+          title: "test_ahmed_hassan_title",
           avatar: "images/avatar-1.png"
         },
         {
           id: "t2",
-          quote: "Amr didn't just help with our media buying, he noticed gaps in our content and suggested a new strategy. He even created over 25 designs before launching the campaign. I'm very impressed with his persistence and his ability to combine data analysis with marketing.",
-          name: "Ahmed Sabry",
-          title: "Business Owner @ So Care",
-          avatar: "images/Ahmedsabry.jpg"
+          quote: "test_ahmed_sabry_quote",
+          name: "test_ahmed_sabry_name",
+          defaultName: "Ahmed Sabry",
+          title: "test_ahmed_sabry_title",
+          avatar: "images/avatar-2.png"
         },
         {
           id: "t3",
-          quote: "Exceptional precision in SQL and Power BI. Amr doesn't just deliver reports; he delivers clarity and strategic growth insights.",
-          name: "Ammar Elbedweihy",
-          title: "Senior Data Analyst",
-          avatar: "images/ammarelbedweihy.jpg"
+          quote: "test_ammar_quote",
+          name: "test_ammar_name",
+          defaultName: "Ammar Elbedweihy",
+          title: "test_ammar_title",
+          avatar: "images/avatar-3.png"
         }
       ];
 
       const servicesData = [
         {
           id: "dashboard-bi",
-          title: "Dashboard Analysis & BI",
+          title: "service_db_title",
           icon: "fa-solid fa-chart-pie",
-          type: "Project / Retainer",
+          type: "service_type_bi",
           deliverables: [
-            "Custom Power BI / Tableau development",
-            "Real-time data integration & pipeline setup",
-            "Executive summary & KPI tracking",
-            "Automated monthly reporting workflows"
+            "service_db_deliv1",
+            "service_db_deliv2",
+            "service_db_deliv3",
+            "service_db_deliv4"
           ]
         },
         {
           id: "sql-expert",
-          title: "SQL Data Expert",
+          title: "service_sql_title",
           icon: "fa-solid fa-database",
-          type: "Technical Project",
+          type: "service_type_sql",
           deliverables: [
-            "Complex query optimization & tuning",
-            "Database architecture & schema design",
-            "ETL process development",
-            "Data cleaning and transformation at scale"
+            "service_sql_deliv1",
+            "service_sql_deliv2",
+            "service_sql_deliv3",
+            "service_sql_deliv4"
           ]
         },
         {
           id: "excel-solutions",
-          title: "Advanced Excel Solutions",
+          title: "service_excel_title",
           icon: "fa-solid fa-file-excel",
-          type: "Business Solution",
+          type: "service_type_excel",
           deliverables: [
-            "Custom VBA Macros & automation",
-            "Complex financial & data modeling",
-            "Power Query / Power Pivot integration",
-            "Interactive dashboard templates"
+            "service_excel_deliv1",
+            "service_excel_deliv2",
+            "service_excel_deliv3",
+            "service_excel_deliv4"
           ]
         },
         {
           id: "media-buying",
-          title: "Data-Driven Media Buying",
+          title: "service_mb_title",
           icon: "fa-solid fa-bullseye",
-          type: "Monthly Retainer",
+          type: "service_type_mb",
           deliverables: [
-            "Multi-platform campaign management",
-            "Conversion tracking & pixel setup",
-            "A/B testing & creative optimization",
-            "Detailed ROI & CAC reporting"
+            "service_mb_deliv1",
+            "service_mb_deliv2",
+            "service_mb_deliv3",
+            "service_mb_deliv4"
           ]
         },
         {
           id: "social-media",
-          title: "Social Media Specialist",
+          title: "service_sm_title",
           icon: "fa-solid fa-share-nodes",
-          type: "Monthly Management",
+          type: "service_type_sm",
           deliverables: [
-            "Data-backed content strategy",
-            "Community engagement & growth",
-            "Competitor analysis & benchmarking",
-            "Social sentiment & engagement tracking"
+            "service_sm_deliv1",
+            "service_sm_deliv2",
+            "service_sm_deliv3",
+            "service_sm_deliv4"
           ]
         },
         {
           id: "crm-data",
-          title: "CRM & Data Management",
+          title: "service_crm_title",
           icon: "fa-solid fa-users-gear",
-          type: "Consultancy / Setup",
+          type: "service_type_crm",
           deliverables: [
-            "CRM implementation (HubSpot, Zoho, etc.)",
-            "Customer segmentation & lead scoring",
-            "Email automation & lifecycle marketing",
-            "Data hygiene & database maintenance"
+            "service_crm_deliv1",
+            "service_crm_deliv2",
+            "service_crm_deliv3",
+            "service_crm_deliv4"
           ]
         }
       ];
@@ -10694,15 +11408,22 @@
         const service = servicesData.find(s => s.id === serviceId);
         if (!service) return;
 
-        document.getElementById('modal-title').textContent = service.title;
-        document.getElementById('modal-type').textContent = service.type;
+        const titleEl = document.getElementById('modal-title');
+        titleEl.setAttribute('data-i18n', service.title);
+        titleEl.textContent = translations[currentLang][service.title] || service.title;
+
+        const typeEl = document.getElementById('modal-type');
+        typeEl.setAttribute('data-i18n', service.type);
+        typeEl.textContent = translations[currentLang][service.type] || service.type;
+
         document.getElementById('modal-icon-box').innerHTML = `<i class="${service.icon}"></i>`;
 
         const list = document.getElementById('modal-deliverables');
         list.innerHTML = '';
         service.deliverables.forEach(item => {
           const li = document.createElement('li');
-          li.textContent = item;
+          li.setAttribute('data-i18n', item);
+          li.textContent = translations[currentLang][item] || item;
           list.appendChild(li);
         });
 
@@ -10751,11 +11472,14 @@
           const content = document.createElement('div');
           content.className = `testimonial-content ${index === 0 ? 'active' : ''}`;
           content.id = `content-${item.id}`;
+          const quoteText = translations[currentLang][item.quote] || item.quote;
+          const titleText = translations[currentLang][item.title] || item.title;
+          const nameText = translations[currentLang][item.name] || item.defaultName;
           content.innerHTML = `
-          <blockquote class="testimonial-quote">${item.quote}</blockquote>
+          <blockquote class="testimonial-quote" data-i18n="${item.quote}">${quoteText}</blockquote>
           <div class="testimonial-author">
-            <span class="author-name">${item.name}</span>
-            <span class="author-title">${item.title}</span>
+            <span class="author-name" data-i18n="${item.name}">${nameText}</span>
+            <span class="author-title" data-i18n="${item.title}">${titleText}</span>
           </div>
         `;
           spotlightContainer.appendChild(content);
@@ -10798,6 +11522,28 @@
       }
 
       initTestimonials();
+
+      /* ---------------- LUXURY LOADER LOGIC ---------------- */
+      const luxuryLoader = document.getElementById('luxury-loader');
+      if (luxuryLoader) {
+        // Ensure minimum display time so the beautiful intro animation finishes
+        const minLoaderTime = 800;
+        const initTime = Date.now();
+
+        function hideLoader() {
+          const elapsed = Date.now() - initTime;
+          const remaining = Math.max(0, minLoaderTime - elapsed);
+          setTimeout(() => {
+            luxuryLoader.classList.add('hidden');
+          }, remaining);
+        }
+
+        if (document.readyState === 'complete') {
+          hideLoader();
+        } else {
+          window.addEventListener('load', hideLoader);
+        }
+      }
 
     </script>
 
